@@ -155,7 +155,7 @@
                               this.failedAdded = true
                               return setTimeout(this.hideMessage, 3000)
 
-                         }
+                         } 
                     })
 
                },
