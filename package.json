@@ -16,7 +16,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "laravel-mix": "^4.0.15",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-multiselect": "^2.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
