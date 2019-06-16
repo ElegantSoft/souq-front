@@ -128,7 +128,7 @@ export default {
                }
           },
           closeNotification(i){
-               // console.log(i)
+               // console.log(i) 
                this.su[i] = true
                return setTimeout(()=>this.su[i]=false,2000)
           },
