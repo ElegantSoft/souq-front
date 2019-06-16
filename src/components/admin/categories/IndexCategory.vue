@@ -32,7 +32,7 @@
                               <tbody>
                                    <tr v-for="(cat,i) in categories" :key="cat._id">
                                         <td>{{i+1}}</td>
-                                        <td><img :src="'/uploads/cat-thumbs/'+cat.image" width="48" alt="Product img"></td>
+                                        <td><img :src="'/uploads/cat-thumbs/resized/'+cat.image" width="48" alt="Product img"></td>
                                         <td>
                                              <h5>{{cat.name}}</h5>
                                         </td>
