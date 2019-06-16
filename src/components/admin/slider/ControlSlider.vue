@@ -60,6 +60,12 @@
                          </multiselect>
                     </div>
                </div>
+               <div class="col-sm-12">
+                    <div class="form-group">
+                         <button type="button" @click="update(slider,i)" class="btn btn-raised m-b-10 btn-info btn-block waves-effect">حفظ السلايدر</button>
+                    </div>
+               </div>
+               <p v-if="su[i]" class="alert alert-success p-2">تم تحديث السلايدر بنجاح</p>
                
 
           </div>
@@ -70,12 +76,18 @@
 
 <script>
 import axios from 'axios'
+import { setTimeout } from 'timers';
 export default {
      data(){
           return{
                sliders:[],
                categories:[],
-               products:[]
+               products:[],
+               su:{
+                    0:false,
+                    1:false,
+                    2:false,
+               },
           }
      },
      mounted(){
@@ -101,7 +113,30 @@ export default {
                     return slider.refId = this.categories[0]
                }
 
-          }
+          },
+          async update(slider,i){
+               const res = await axios({
+                    url:'/admin/slider/update',
+                    method:'POST',
+                    data:{
+                         slider
+                    }
+               });
+               if(res.data.message=='updated'){
+                    this.su[i] =true
+                    return   this.closeNotification(i)
+               }
+          },
+          closeNotification(i){
+               // console.log(i)
+               this.su[i] = true
+               return setTimeout(()=>this.su[i]=false,2000)
+          },
+
+          
+
+     },
+     computed:{
      }
 }
 </script>
