@@ -3,9 +3,28 @@
           <link rel="stylesheet" href="/ms.css">
 <!-- slider -->
           <div class="form-group col-sm-12 mb-2" style="border-bottom:1px #e1e1e1 solid" v-for="(slider,i) in sliders" :key="i">
+
                <div >
                     <span>رقم السلايدر {{i+1}}</span>
                     <br>
+                    <div class="col-sm-6">
+                         <label for="">صورة السلايدر </label>
+                         <span class="text-muted small">برجاء اختيار صورة مناسبة للقسم سوف تظهر فى التطبيق</span>
+                         <br>
+                         <input type="file" class="" @change="imageHandler($event,slider,i)">
+                    </div>
+                                             <div class="col-sm-12">
+
+                              <p class="alert alert-danger p-2" v-if="extErr[i]">يجب ان تكون الملفات المرفوعة بصيغة png,
+                                   jpeg, jpg</p>
+                              <div class="progress m-3" v-if="uploadPercentage[i] > 0">
+                                   <div class="progress-bar" role="progressbar" :style="{'width': uploadPercentage[i]+'%'}"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        {{uploadPercentage[i] + '%'}}
+                                   </div>
+                              </div>
+
+                         </div>
                     <span class="text-muted text ">الصورة</span>
                     <img :src="'/uploads/slider/'+slider.image" style="height:200px; width:auto; border:1px #eae1e1 solid; padding: 3px;">
                </div>
@@ -88,6 +107,20 @@ export default {
                     1:false,
                     2:false,
                },
+               form: new FormData,
+               uploadPercentage: {
+                    0:0,
+                    1:0,
+                    2:0,
+               },
+               extErr: {
+                    0:false,
+                    1:false,
+                    2:false
+               },
+               successAdded: false,
+               errMessage: '',
+               failedAdded: false
           }
      },
      mounted(){
@@ -132,6 +165,46 @@ export default {
                this.su[i] = true
                return setTimeout(()=>this.su[i]=false,2000)
           },
+          imageHandler(e,slider,i) {
+                    this.uploadPercentage = {
+                         0:0,
+                         1:0,
+                         2:0
+                    };
+                    this.extErr = {
+                         0:false,
+                         1:false,
+                         2:false,
+                    };
+                    this.form = new FormData
+                    
+
+                    let ext = ['png', 'jpeg', 'jpg'];
+                    if (ext.includes(e.target.files[0].name.split(".").pop())) {
+                         this.form.append('thumb', e.target.files[0]);
+                         const config = {
+                              headers: {
+                                   'Content-Type': 'multipart/form-data'
+                              },
+                              onUploadProgress: function (progressEvent) {
+                                   this.uploadPercentage[i] = parseInt(Math.round((progressEvent.loaded * 100) /
+                                        progressEvent.total));
+                              }.bind(this)
+                         };
+                         axios.post('/api/slider/upload-image', this.form, config).then(
+                              res => {
+                                   if (res.data.message == 'done') {
+                                        this.newCategory.image = res.data.image
+                                   }
+                              }
+                         )
+                         console.log(this.form)
+                    } else {
+                         this.extErr[i] = true;
+                    }
+
+
+               },
 
           
 
