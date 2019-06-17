@@ -155,7 +155,7 @@ export default {
                          slider
                     }
                });
-               if(res.data.message=='updated'){
+               if(res.data.message=='success'){
                     this.su[i] =true
                     return   this.closeNotification(i)
                }
@@ -191,10 +191,10 @@ export default {
                                         progressEvent.total));
                               }.bind(this)
                          };
-                         axios.post('/api/slider/upload-image', this.form, config).then(
+                         axios.post('/admin/slider/upload-image', this.form, config).then(
                               res => {
-                                   if (res.data.message == 'done') {
-                                        this.newCategory.image = res.data.image
+                                   if (res.data.message == 'success') {
+                                        this.sliders[i].image = res.data.image
                                    }
                               }
                          )
