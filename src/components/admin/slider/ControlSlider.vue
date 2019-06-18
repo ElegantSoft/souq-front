@@ -133,10 +133,10 @@ export default {
                axios.get('/admin/slider/fetch-slider').then(res=>this.sliders = res.data.slider)
           },
           fetchCategories(){
-               axios.get('/api/category/get-parents').then(res => this.categories = res.data.cats)
+               axios.get('/app/category/get-parents').then(res => this.categories = res.data.cats)
           },
           fetchProducts(){
-               axios.get('/api/product/fetch-all').then(res => this.products = res.data.products)
+               axios.get('/app/product/fetch-all').then(res => this.products = res.data.products)
           },
           typeChanged(slider){
                if(slider.refType == 'product'){

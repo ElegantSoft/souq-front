@@ -43,9 +43,9 @@
                                              <a href="javascript:void(0);"
                                                   class="btn btn-default waves-effect waves-float waves-green"><i
                                                        class="zmdi zmdi-edit"></i></a>
-                                             <a href="javascript:void(0);"
+                                             <button @click="remove(cat,i)" type="button"
                                                   class="btn btn-default waves-effect waves-float waves-red"><i
-                                                       class="zmdi zmdi-delete"></i></a>
+                                                       class="zmdi zmdi-delete"></i></button>
                                         </td>
                                    </tr>
 
@@ -87,11 +87,27 @@ export default {
      methods:{
           async getCategories(){
                const res = await axios({
-                    url:`/api/category/paginate?page=${this.page}&limit=${this.limit}`
+                    url:`/app/category/paginate?page=${this.page}&limit=${this.limit}`
                })
                this.categories = res.data.data
                this.lastPage = res.data.lastPage
                this.nextPage=res.data.nextPage
+          },
+          remove(cat,i){
+               axios({
+                    url:'/admin/category/delete',
+                    method:'DELETE',
+                    data:{
+                         id:cat._id
+                    }
+               }).then(
+                    res =>{
+                         if(res.data.message=='deleted'){
+                              alert('تم مسح القسم')
+                              this.$delete(this.categories,i)
+                         }
+                    }
+               )
           }
      },
      computed:{

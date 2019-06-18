@@ -98,7 +98,7 @@
           methods: {
                getParent() {
                     axios({
-                         url: '/api/category/get-parents',
+                         url: '/app/category/get-parents',
                          method: 'GET'
                     }).then(res => {
                          this.parents = res.data.cats
@@ -121,7 +121,7 @@
                                         progressEvent.total));
                               }.bind(this)
                          };
-                         axios.post('/api/category/upload-image', this.form, config).then(
+                         axios.post('/admin/category/upload-image', this.form, config).then(
                               res => {
                                    if (res.data.message == 'done') {
                                         this.newCategory.image = res.data.image
@@ -138,7 +138,7 @@
                addCategory() {
                     this.successAdded = false
                     axios({
-                         url: '/api/category/create',
+                         url: '/admin/category/create',
                          method: 'POST',
                          data: {
                               name: this.newCategory.name,
