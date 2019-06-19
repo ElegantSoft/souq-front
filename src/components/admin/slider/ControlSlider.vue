@@ -26,7 +26,7 @@
 
                          </div>
                     <span class="text-muted text ">الصورة</span>
-                    <img :src="'/uploads/slider/'+slider.image" style="height:200px; width:auto; border:1px #eae1e1 solid; padding: 3px;">
+                    <img :src="'/uploads/slider/resized/'+slider.image" style="height:200px; width:auto; border:1px #eae1e1 solid; padding: 3px;">
                </div>
                <div class="col-sm-12">
                     <div class="form-group" >
