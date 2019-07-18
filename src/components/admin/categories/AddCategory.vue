@@ -1,5 +1,5 @@
 <template>
-     <div class="form-container row container">
+     <div class="form-container row container" style="text-align:right">
 
 
           <div class="col-sm-12">
