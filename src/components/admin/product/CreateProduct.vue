@@ -216,7 +216,52 @@
             </tbody>
           </table>
 
+
         </b-col>
+        <div class="row" v-if="tableOfAttrs.length >= 1">
+          <div class="col-12">
+            <h5 class="mt-3 mb-3 text-success">عند الانتهاء من اضافة كل المتغيرات اضغط هنا لاضافة القطع </h5>
+          </div>
+
+          <div class="col-6">
+            <div class="row"   >
+              <div class="col-12">
+              </div>
+              <b-col sm="12" v-for="(attr,i) in product.attributes" :key="i" >
+                <label >  اسم المتغير
+                  <span class="text-success">{{attr.attr_name.ar +' - ' + attr.attr_name.en}} </span>
+                </label>
+                <select class="form-control" @change="selectChanged($event,i)">
+                  <option v-for="(value ,i) in attr.attr_values" :value="i" :key="i">{{value.ar+' - '+value.en}}</option>
+                </select>
+
+              </b-col>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <b-col sm="12">
+                <b-form-group id="product-title-group" label="عدد القطع فى هذا المنتج فى المخزن " label-for="product-price"
+                              description=" مثال ٥ قطع ">
+                  <b-form-input ></b-form-input>
+                </b-form-group>
+              </b-col>
+
+              <b-col sm="12">
+                <b-form-group id="product-title-group" label="السعر لهذه القطعة " label-for="product-price"
+                              description=" مثال ٢٠٠ ">
+                  <b-form-input ></b-form-input>
+                </b-form-group>
+              </b-col>
+
+              <b-col sm="12">
+                <b-button block   variant="success">اضافة القطعة</b-button>
+
+              </b-col>
+
+            </div>
+          </div>
+        </div>
       </b-row>
       <!--<button type="submit">انشاء منتج</button>-->
     </b-form>
@@ -281,12 +326,24 @@
 
         ],
 
+        newPieces:{
+          attributes:[
+
+          ]
+        }
+
       }
     },
     mounted(){
       this.fetchCategories()
     },
     methods:{
+      selectChanged(e,i){
+        const selectedValueIndex = e.target.value;
+        this.newPieces.attributes[i].attr_value.ar = this.product.attributes[i].attr_values[selectedValueIndex].ar;
+        this.newPieces.attributes[i].attr_value.en = this.product.attributes[i].attr_values[selectedValueIndex].en;
+        // console.log(selectedValueIndex,i)
+      },
       fetchCategories(){
         axios.get('/app/category/get-parents').then(res => this.categories = res.data.cats)
       },
@@ -374,6 +431,20 @@
           return item.en = en_values_array_filtered[i];
         });
         this.product.attributes.push(oneAttr);
+
+
+        let attribute = {
+              attr_name:{
+                ar:ar_title,
+                en:en_title
+              },
+              attr_value:{
+                ar:ar_values_array_filtered[0],
+                en:en_values_array_filtered[0]
+
+              }
+            };
+        this.newPieces.attributes.push(attribute);
         this.newAttr.attr_name.ar = '';
         this.newAttr.attr_name.en = '';
         this.newAttr.attr_values.ar = '';
