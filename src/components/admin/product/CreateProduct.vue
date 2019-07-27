@@ -9,38 +9,38 @@
 
         <!--ar title-->
         <b-col sm="12">
-          <b-form-group id="product-title-group" label="العنوان الخاص بالمنتج باللغة العربية:" label-for="product-title"
+          <b-form-group label="العنوان الخاص بالمنتج باللغة العربية:" label-for="product-title"
                         description="هذا العنوان سيظهر لمستخدمين اللغةالعربية">
-            <b-form-input required :state="product.title.ar.length > 4" id="product-title" v-model="product.title.ar"
+            <b-form-input required :state="product.title.ar.length > 4" v-model="product.title.ar"
                           type="text"></b-form-input>
           </b-form-group>
         </b-col>
 
         <!--en title-->
         <b-col sm="12">
-          <b-form-group id="product-title-group" label="العنوان الخاص بالمنتج باللغة الانجليزية:"
+          <b-form-group label="العنوان الخاص بالمنتج باللغة الانجليزية:"
                         label-for="product-title"
                         description="هذا العنوان سيظهر لمستخدمين اللغة الانجليزية">
-            <b-form-input required :state="product.title.en.length > 4" id="product-title" v-model="product.title.en"
+            <b-form-input required :state="product.title.en.length > 4" v-model="product.title.en"
                           type="text"></b-form-input>
           </b-form-group>
         </b-col>
 
         <!-- price -->
         <b-col sm="12">
-          <b-form-group id="product-title-group" label="سعر المنتج:" label-for="product-price"
+          <b-form-group label="سعر المنتج:" label-for="product-price"
                         description="من فضلك تأكد ان لوحة المفاتيح باللغة الانجليزية و انت تضيف السعر">
-            <b-form-input required :state="product.price > 0" id="product-price" v-model.number="product.price"
+            <b-form-input required :state="product.price > 0" v-model.number="product.price"
                           type="number"></b-form-input>
           </b-form-group>
         </b-col>
 
         <!-- if has discount -->
         <b-col sm="12">
-          <b-form-group id="product-title-group" label="وضع سعر مخفض:" label-for="product-hasDiscount"
+          <b-form-group label="وضع سعر مخفض:" label-for="product-hasDiscount"
                         description="برجاء اختيار هذا الاختيار ان كنت تريد وضع سعر مخفض لهذا المنتج لفترة زمنية مجدولة">
             <b-form-checkbox
-              id="product-hasDiscount"
+
               v-model="product.hasDiscount"
               :value="true"
               :unchecked-value="false"
@@ -52,10 +52,10 @@
 
         <!-- discount price -->
         <b-col sm="12" v-if="product.hasDiscount">
-          <b-form-group id="product-title-group" label="سعر التخفيض:" label-for="product-price"
+          <b-form-group label="سعر التخفيض:" label-for="product-price"
                         description="من فضلك يجب ان يكون سعر الخصم أقل من سعر المنتج الاصلى">
             <b-form-input :state="product.discountPrice < product.price && product.discountPrice != null"
-                          id="product-price" v-model.number="product.discountPrice" type="number"></b-form-input>
+                          v-model.number="product.discountPrice" type="number"></b-form-input>
           </b-form-group>
         </b-col>
 
@@ -63,14 +63,14 @@
 
         <!--ar details-->
         <b-col sm="12">
-          <b-form-group id="product-details-group" label="وصف المنتج باللغة العربية:" label-for="product-details"
+          <b-form-group label="وصف المنتج باللغة العربية:" label-for="product-details"
                         description="هذا الوصف الذى سيظهر لمستخدمين اللغة العربية">
             <b-form-textarea
               style="
                          border: 1px solid #e1e1e1;
                          border-radius: 5px;
                          "
-              id="product-details"
+
               v-model="product.details.ar"
 
               rows="3"
@@ -82,14 +82,14 @@
 
         <!--en details-->
         <b-col sm="12">
-          <b-form-group id="product-details-group" label="وصف المنتج باللغة الانجليزية:" label-for="product-details"
+          <b-form-group label="وصف المنتج باللغة الانجليزية:" label-for="product-details"
                         description="هذا الوصف سيظهر لمستخدمين اللغة الانجليزية">
             <b-form-textarea
               style="
                          border: 1px solid #e1e1e1;
                          border-radius: 5px;
                          "
-              id="product-details"
+
               v-model="product.details.en"
               rows="3"
               max-rows="6"
@@ -100,7 +100,7 @@
 
         <!-- categories -->
         <b-col sm="12">
-          <b-form-group id="product-details-group" label="القسم:" label-for="product-categories"
+          <b-form-group label="القسم:" label-for="product-categories"
                         description="من فضلك اختر القسم الذى ينتمى له المنتج">
             <multiselect v-model="product.categories"
                          :options="categories"
@@ -126,25 +126,25 @@
             <h5 class="mt-3 mb-3 text-success">اضافة المواصفات مثلا الكاميرة ٨ ميجا </h5>
           </b-col>
           <b-col sm="3">
-            <b-form-group id="product-title-group" label="اسم الصفة باللغة العربية:" label-for="product-price"
+            <b-form-group label="اسم الصفة باللغة العربية:" label-for="product-price"
                           description="مثلا الكاميرة او حجم الشاشة">
               <b-form-input v-model="newSpec.title.ar"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
-            <b-form-group id="product-title-group" label="التفاصيل للصفة باللغة العربية:" label-for="product-price"
+            <b-form-group label="التفاصيل للصفة باللغة العربية:" label-for="product-price"
                           description="مثلا ١٨ ميجا او ١٠ بوصة">
               <b-form-input v-model="newSpec.details.ar"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
-            <b-form-group id="product-title-group" label="اسم الصفة باللغة الانجليزية:" label-for="product-price"
+            <b-form-group label="اسم الصفة باللغة الانجليزية:" label-for="product-price"
                           description="Example Camera or Screen size">
               <b-form-input v-model="newSpec.title.en"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
-            <b-form-group id="product-title-group" label="التفاصيل للصفة باللغة الانجليزية:" label-for="product-price"
+            <b-form-group label="التفاصيل للصفة باللغة الانجليزية:" label-for="product-price"
                           description="Example 18M or 10 Inch">
               <b-form-input v-model="newSpec.details.en"></b-form-input>
             </b-form-group>
@@ -171,31 +171,31 @@
         </b-col>
 
         <b-col sm="4">
-          <b-form-group id="product-title-group" label="اسم المتغير باللغة العربية :" label-for="product-price"
+          <b-form-group label="اسم المتغير باللغة العربية :" label-for="product-price"
                         description="مثلا المساحة او اللون">
             <b-form-input v-model="newAttr.attr_name.ar"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col sm="8">
-          <b-form-group id="product-title-group"
-                        label="ادخل المتغيرات باللغة العربية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
-                        label-for="product-price"
-                        description=" مثلا: احمر,اخضر,اصفر,ازرق">
+          <b-form-group
+            label="ادخل المتغيرات باللغة العربية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
+            label-for="product-price"
+            description=" مثلا: احمر,اخضر,اصفر,ازرق">
             <b-form-input v-model="newAttr.attr_values.ar"></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col sm="4">
-          <b-form-group id="product-title-group" label="اسم المتغير باللغة الانجليزية :" label-for="product-price"
+          <b-form-group label="اسم المتغير باللغة الانجليزية :" label-for="product-price"
                         description="Example: storage or color">
             <b-form-input v-model="newAttr.attr_name.en"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col sm="8">
-          <b-form-group id="product-title-group"
-                        label="ادخل المتغيرات باللغة الانجليزية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
-                        label-for="product-price"
-                        description=" Example: red,blue,green">
+          <b-form-group
+            label="ادخل المتغيرات باللغة الانجليزية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
+            label-for="product-price"
+            description=" Example: red,blue,green">
             <b-form-input v-model="newAttr.attr_values.en"></b-form-input>
           </b-form-group>
         </b-col>
@@ -209,6 +209,7 @@
 
         <!--show attr-->
         <b-col sm="12" v-if="tableOfAttrs.length >= 1">
+          <h3 class="text text-success"> المتغيرات</h3>
           <table class="table table-striped table-sm table-hover ">
             <thead>
             <tr>
@@ -226,7 +227,7 @@
               <td v-html="table.arAttr"></td>
               <td v-html="table.enAttr"></td>
               <td>
-                <b-button @click="deleteAttr(i)" variant="danger"> حذف</b-button>
+                <b-button @click="deleteAttr(i)" variant="danger sm small"> حذف</b-button>
               </td>
             </tr>
 
@@ -259,22 +260,22 @@
           <div class="col-6">
             <div class="row">
               <b-col sm="12">
-                <b-form-group id="product-title-group" label="عدد القطع فى هذا المنتج فى المخزن "
+                <b-form-group label="عدد القطع فى هذا المنتج فى المخزن "
                               label-for="product-price"
                               description=" مثال ٥ قطع ">
-                  <b-form-input v-model="newPieces.inStock"></b-form-input>
+                  <b-form-input v-model.number="newPieces.inStock"></b-form-input>
                 </b-form-group>
               </b-col>
 
               <b-col sm="12">
-                <b-form-group id="product-title-group" label="السعر لهذه القطعة " label-for="product-price"
+                <b-form-group label="السعر لهذه القطعة " label-for="product-price"
                               description=" مثال ٢٠٠ ">
-                  <b-form-input v-model="newPieces.inStock"></b-form-input>
+                  <b-form-input v-model.number="newPieces.price"></b-form-input>
                 </b-form-group>
               </b-col>
 
               <b-col sm="12">
-                <b-form-group id="product-title-group" label="وضع سعر مخفض:"
+                <b-form-group label="وضع سعر مخفض:"
                               description="برجاء اختيار هذا الاختيار ان كنت تريد وضع سعر مخفض لهذا المنتج لفترة زمنية مجدولة">
                   <b-form-checkbox
                     v-model="newPieces.hasDiscount"
@@ -288,7 +289,7 @@
 
               <!-- discount price -->
               <b-col sm="12" v-if="newPieces.hasDiscount">
-                <b-form-group id="product-title-group" label="سعر التخفيض:" label-for="product-price"
+                <b-form-group label="سعر التخفيض:" label-for="product-price"
                               description="من فضلك يجب ان يكون سعر الخصم أقل من سعر المنتج الاصلى">
                   <b-form-input v-model="newPieces.discountPrice" type="number"></b-form-input>
                 </b-form-group>
@@ -302,13 +303,44 @@
               </b-col>
               <b-col sm="12">
 
-                <b-button block variant="success">اضافة القطعة</b-button>
+                <b-button @click="addPiece" block variant="success">اضافة القطعة</b-button>
 
               </b-col>
+              <!--show attr-->
 
             </div>
+
           </div>
         </div>
+          <b-col sm="12" v-if="tableOfPieces.length >= 1">
+            <h3 class="text text-success"> القطع</h3>
+
+            <table class="table table-striped table-sm table-hover ">
+              <thead>
+              <tr>
+                <th scope="col">المتغيرات</th>
+                <th scope="col">السعر</th>
+                <th scope="col">السعر المخفض</th>
+                <th scope="col">تاريخ انتهاء التخفيض</th>
+                <th scope="col">عدد القطع</th>
+                <th scope="col">حذف</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(table,i) in tableOfPieces" :key="i">
+                <th scope="row" v-html="table.attributes"></th>
+                <td>{{table.price}}</td>
+                <td>{{table.discountPrice? table.discountPrice : 'لا يوجد سعر مخفض'}}</td>
+                <td>{{table.discountEnd | formatDate }}</td>
+                <td>{{table.inStock}}</td>
+                <td>
+                  <b-button @click="deletePiece(i)" variant="danger sm small"> حذف</b-button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </b-col>
       </b-row>
       <!--<button type="submit">انشاء منتج</button>-->
     </b-form>
@@ -316,8 +348,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import Datepicker from 'vuejs-datepicker'
+  import axios from 'axios';
+  import Datepicker from 'vuejs-datepicker';
+  import moment from 'moment';
 
   export default {
     components: {
@@ -347,6 +380,8 @@
           SizeTableImage: '',
         },
         categories: [],
+
+        //specs
         newSpec: {
           title: {
             ar: '',
@@ -360,7 +395,6 @@
         tableOfSpecs: [],
 
         //attributes
-
         newAttr: {
           attr_name: {
             ar: '',
@@ -372,9 +406,9 @@
 
           }
         },
-
         tableOfAttrs: [],
 
+        //pieces
         newPieces: {
           attributes: [],
           price: null,
@@ -382,7 +416,8 @@
           discountPrice: null,
           discountEnd: null,
           inStock: 0
-        }
+        },
+        tableOfPieces: [],
 
       }
     },
@@ -390,20 +425,45 @@
       this.fetchCategories()
     },
     methods: {
+
+      /**
+       * assign value to attribute when change value
+       * @return void
+       * @param e Event
+       * @param i Index of Attribute
+       */
       selectChanged(e, i) {
         const selectedValueIndex = e.target.value;
         this.newPieces.attributes[i].attr_value.ar = this.product.attributes[i].attr_values[selectedValueIndex].ar;
         this.newPieces.attributes[i].attr_value.en = this.product.attributes[i].attr_values[selectedValueIndex].en;
         // console.log(selectedValueIndex,i)
       },
+
+
+      /**
+       * Fetching categories
+       * @return void
+       */
       fetchCategories() {
         axios.get('/app/category/get-parents').then(res => this.categories = res.data.cats)
       },
+
+
+      /**
+       * Creating new product
+       * @param e Event
+       */
       createProduct(e) {
         e.preventDefault();
         console.log('s')
 
       },
+
+
+      /**
+       * add new specialize
+       * @return void
+       */
       async addSpec() {
         const newSpec2 = {
           title: {
@@ -419,6 +479,13 @@
         await this.removeNewSpecAndAssignToTable()
 
       },
+
+
+      /**
+       * reset new specialize and assign its value to
+       * the table of specializes
+       * @return void
+       */
       removeNewSpecAndAssignToTable() {
         const newItemForTable = {
           'الاسم بالعربى': this.newSpec.title.ar,
@@ -432,6 +499,12 @@
         this.newSpec.details.ar = '';
         this.newSpec.details.en = '';
       },
+
+
+      /**
+       * add attribute
+       * @return void
+       */
       addAttr() {
         const ar_title = this.newAttr.attr_name.ar;
         const en_title = this.newAttr.attr_name.en;
@@ -504,14 +577,83 @@
 
       },
 
+
+      /**
+       * delete attribute by id
+       * @return void
+       * @param id
+       */
       deleteAttr(id) {
         this.$delete(this.tableOfAttrs, id);
         this.$delete(this.product.attributes, id);
         this.$delete(this.newPieces.attributes, id)
+      },
+
+
+      /**
+       * add new piece to product and reset the new piece object
+       * @return void
+       */
+      addPiece() {
+        const newPiece = {
+          attributes: this.newPieces.attributes,
+          price: this.newPieces.price,
+          hasDiscount: this.newPieces.hasDiscount,
+          discountPrice: this.newPieces.discountPrice,
+          discountEnd: this.newPieces.discountEnd,
+          inStock: this.newPieces.inStock,
+        };
+        this.product.pieces.push(newPiece);
+
+        let newTableOfPiecesItem = {
+          attributes: '',
+          price: this.newPieces.price,
+          hasDiscount: this.newPieces.hasDiscount,
+          discountPrice: this.newPieces.discountPrice,
+          discountEnd: this.newPieces.discountEnd,
+          inStock: this.newPieces.inStock,
+        };
+
+        newTableOfPiecesItem.attributes += '<div>';
+        newPiece.attributes.map((item, i) => {
+          newTableOfPiecesItem.attributes += '<span class="badge badge-success">' + item.attr_name.ar + ': ' + item.attr_value.ar + '</span>';
+        });
+        newTableOfPiecesItem.attributes += '</div>';
+
+        this.tableOfPieces.push(newTableOfPiecesItem);
+
+        this.newPieces.price = null;
+        this.newPieces.hasDiscount = false;
+        this.newPieces.discountPrice = null;
+        this.newPieces.discountEnd = null;
+        this.newPieces.inStock = 0
+
+      },
+
+
+      deletePiece(i){
+
       }
 
 
     },
+
+    filters:{
+
+      /**
+       * Filter product discount expiration date
+       * @param data
+       * @return Date
+       */
+      formatDate(data){
+        if (data) {
+          moment.locale('ar_SA');
+          return moment(String(data)).fromNow()
+        }else {
+          return 'لا يوجد تاريخ انتهاء'
+        }
+      }
+    }
 
   }
 </script>
