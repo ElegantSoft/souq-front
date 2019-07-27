@@ -57,6 +57,12 @@
             <b-form-input :state="product.discountPrice < product.price && product.discountPrice != null"
                           v-model.number="product.discountPrice" type="number"></b-form-input>
           </b-form-group>
+
+          <b-form-group label="تاريخ انتهاء التخفيض:" label-for="product-price"
+                        description="لن يعمل التخفيض عند انتهاء التاريخ">
+            <datepicker style="width:100%" placeholder="تاريخ انتهاء التخفيض" v-model="product.discountEnd"
+                        name="DisCountEnd"></datepicker>
+          </b-form-group>
         </b-col>
 
         <!-- details -->
@@ -128,30 +134,30 @@
           <b-col sm="3">
             <b-form-group label="اسم الصفة باللغة العربية:" label-for="product-price"
                           description="مثلا الكاميرة او حجم الشاشة">
-              <b-form-input v-model="newSpec.title.ar"></b-form-input>
+              <b-form-input v-model="product.newSpec.title.ar"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
             <b-form-group label="التفاصيل للصفة باللغة العربية:" label-for="product-price"
                           description="مثلا ١٨ ميجا او ١٠ بوصة">
-              <b-form-input v-model="newSpec.details.ar"></b-form-input>
+              <b-form-input v-model="product.newSpec.details.ar"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
             <b-form-group label="اسم الصفة باللغة الانجليزية:" label-for="product-price"
                           description="Example Camera or Screen size">
-              <b-form-input v-model="newSpec.title.en"></b-form-input>
+              <b-form-input v-model="product.newSpec.title.en"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="3">
             <b-form-group label="التفاصيل للصفة باللغة الانجليزية:" label-for="product-price"
                           description="Example 18M or 10 Inch">
-              <b-form-input v-model="newSpec.details.en"></b-form-input>
+              <b-form-input v-model="product.newSpec.details.en"></b-form-input>
             </b-form-group>
           </b-col>
           <b-col sm="12">
             <b-button block @click="addSpec"
-                      :disabled="newSpec.title.ar.length < 1 || newSpec.title.en.length < 1 || newSpec.details.ar.length < 1 || newSpec.details.en.length < 1"
+                      :disabled="product.newSpec.title.ar.length < 1 || product.newSpec.title.en.length < 1 || product.newSpec.details.ar.length < 1 || product.newSpec.details.en.length < 1"
                       variant="success">اضافة الخاصية
             </b-button>
 
@@ -159,8 +165,8 @@
         </b-row>
       </b-row> <!-- end of specs-->
       <!--show specs-->
-      <div v-if="tableOfSpecs.length >= 1">
-        <b-table striped hover small :items="tableOfSpecs"></b-table>
+      <div v-if="product.tableOfSpecs.length >= 1">
+        <b-table striped hover small :items="product.tableOfSpecs"></b-table>
       </div>
 
 
@@ -173,7 +179,7 @@
         <b-col sm="4">
           <b-form-group label="اسم المتغير باللغة العربية :" label-for="product-price"
                         description="مثلا المساحة او اللون">
-            <b-form-input v-model="newAttr.attr_name.ar"></b-form-input>
+            <b-form-input v-model="product.newAttr.attr_name.ar"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col sm="8">
@@ -181,14 +187,14 @@
             label="ادخل المتغيرات باللغة العربية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
             label-for="product-price"
             description=" مثلا: احمر,اخضر,اصفر,ازرق">
-            <b-form-input v-model="newAttr.attr_values.ar"></b-form-input>
+            <b-form-input v-model="product.newAttr.attr_values.ar"></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col sm="4">
           <b-form-group label="اسم المتغير باللغة الانجليزية :" label-for="product-price"
                         description="Example: storage or color">
-            <b-form-input v-model="newAttr.attr_name.en"></b-form-input>
+            <b-form-input v-model="product.newAttr.attr_name.en"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col sm="8">
@@ -196,19 +202,19 @@
             label="ادخل المتغيرات باللغة الانجليزية متبوعة بفاصلة , (ستاجد الفاصلة عند الضغط على shift + 'و' ) :"
             label-for="product-price"
             description=" Example: red,blue,green">
-            <b-form-input v-model="newAttr.attr_values.en"></b-form-input>
+            <b-form-input v-model="product.newAttr.attr_values.en"></b-form-input>
           </b-form-group>
         </b-col>
         <b-col sm="12">
           <b-button block @click="addAttr"
-                    :disabled="newAttr.attr_name.ar.length < 1 || newAttr.attr_name.en.length < 1 || newAttr.attr_values.ar.length < 1 || newAttr.attr_values.en.length < 1"
+                    :disabled="product.newAttr.attr_name.ar.length < 1 || product.newAttr.attr_name.en.length < 1 || product.newAttr.attr_values.ar.length < 1 || product.newAttr.attr_values.en.length < 1"
                     variant="success">اضافة المتغيرات
           </b-button>
 
         </b-col>
 
         <!--show attr-->
-        <b-col sm="12" v-if="tableOfAttrs.length >= 1">
+        <b-col sm="12" v-if="product.tableOfAttrs.length >= 1">
           <h3 class="text text-success"> المتغيرات</h3>
           <table class="table table-striped table-sm table-hover ">
             <thead>
@@ -221,7 +227,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(table,i) in tableOfAttrs" :key="i">
+            <tr v-for="(table,i) in product.tableOfAttrs" :key="i">
               <th scope="row">{{table.arTitle}}</th>
               <td>{{table.enTitle}}</td>
               <td v-html="table.arAttr"></td>
@@ -236,7 +242,7 @@
 
 
         </b-col>
-        <div class="row" v-if="tableOfAttrs.length >= 1">
+        <div class="row" v-if="product.tableOfAttrs.length >= 1">
           <div class="col-12">
             <h5 class="mt-3 mb-3 text-success">عند الانتهاء من اضافة كل المتغيرات اضغط هنا لاضافة القطع </h5>
           </div>
@@ -263,14 +269,14 @@
                 <b-form-group label="عدد القطع فى هذا المنتج فى المخزن "
                               label-for="product-price"
                               description=" مثال ٥ قطع ">
-                  <b-form-input v-model.number="newPieces.inStock"></b-form-input>
+                  <b-form-input v-model.number="product.newPieces.inStock"></b-form-input>
                 </b-form-group>
               </b-col>
 
               <b-col sm="12">
                 <b-form-group label="السعر لهذه القطعة " label-for="product-price"
                               description=" مثال ٢٠٠ ">
-                  <b-form-input v-model.number="newPieces.price"></b-form-input>
+                  <b-form-input v-model.number="product.newPieces.price"></b-form-input>
                 </b-form-group>
               </b-col>
 
@@ -278,7 +284,7 @@
                 <b-form-group label="وضع سعر مخفض:"
                               description="برجاء اختيار هذا الاختيار ان كنت تريد وضع سعر مخفض لهذا المنتج لفترة زمنية مجدولة">
                   <b-form-checkbox
-                    v-model="newPieces.hasDiscount"
+                    v-model="product.newPieces.hasDiscount"
                     :value="true"
                     :unchecked-value="false"
                   >
@@ -288,16 +294,16 @@
               </b-col>
 
               <!-- discount price -->
-              <b-col sm="12" v-if="newPieces.hasDiscount">
+              <b-col sm="12" v-if="product.newPieces.hasDiscount">
                 <b-form-group label="سعر التخفيض:" label-for="product-price"
                               description="من فضلك يجب ان يكون سعر الخصم أقل من سعر المنتج الاصلى">
-                  <b-form-input v-model="newPieces.discountPrice" type="number"></b-form-input>
+                  <b-form-input v-model="product.newPieces.discountPrice" type="number"></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col sm="12" v-if="newPieces.hasDiscount">
+              <b-col sm="12" v-if="product.newPieces.hasDiscount">
                 <b-form-group label="تاريخ انتهاء التخفيض:" label-for="product-price"
                               description="لن يعمل التخفيض عند انتهاء التاريخ">
-                  <datepicker style="width:100%" placeholder="تاريخ انتهاء التخفيض" v-model="newPieces.discountEnd"
+                  <datepicker style="width:100%" placeholder="تاريخ انتهاء التخفيض" v-model="product.newPieces.discountEnd"
                               name="DisCountEnd"></datepicker>
                 </b-form-group>
               </b-col>
@@ -312,7 +318,7 @@
 
           </div>
         </div>
-          <b-col sm="12" v-if="tableOfPieces.length >= 1">
+          <b-col sm="12" v-if="product.tableOfPieces.length >= 1">
             <h3 class="text text-success"> القطع</h3>
 
             <table class="table table-striped table-sm table-hover ">
@@ -327,7 +333,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(table,i) in tableOfPieces" :key="i">
+              <tr v-for="(table,i) in product.tableOfPieces" :key="i">
                 <th scope="row" v-html="table.attributes"></th>
                 <td>{{table.price}}</td>
                 <td>{{table.discountPrice? table.discountPrice : 'لا يوجد سعر مخفض'}}</td>
@@ -378,46 +384,48 @@
           specs: [],
           pieces: [],
           SizeTableImage: '',
+
+          //specs
+          newSpec: {
+            title: {
+              ar: '',
+              en: ''
+            },
+            details: {
+              ar: '',
+              en: ''
+            }
+          },
+          tableOfSpecs: [],
+
+          //attributes
+          newAttr: {
+            attr_name: {
+              ar: '',
+              en: ''
+            },
+            attr_values: {
+              ar: '',
+              en: ''
+
+            }
+          },
+          tableOfAttrs: [],
+
+          //pieces
+          newPieces: {
+            attributes: [],
+            price: null,
+            hasDiscount: false,
+            discountPrice: null,
+            discountEnd: null,
+            inStock: 0
+          },
+          tableOfPieces: [],
         },
         categories: [],
 
-        //specs
-        newSpec: {
-          title: {
-            ar: '',
-            en: ''
-          },
-          details: {
-            ar: '',
-            en: ''
-          }
-        },
-        tableOfSpecs: [],
 
-        //attributes
-        newAttr: {
-          attr_name: {
-            ar: '',
-            en: ''
-          },
-          attr_values: {
-            ar: '',
-            en: ''
-
-          }
-        },
-        tableOfAttrs: [],
-
-        //pieces
-        newPieces: {
-          attributes: [],
-          price: null,
-          hasDiscount: false,
-          discountPrice: null,
-          discountEnd: null,
-          inStock: 0
-        },
-        tableOfPieces: [],
 
       }
     },
@@ -434,8 +442,8 @@
        */
       selectChanged(e, i) {
         const selectedValueIndex = e.target.value;
-        this.newPieces.attributes[i].attr_value.ar = this.product.attributes[i].attr_values[selectedValueIndex].ar;
-        this.newPieces.attributes[i].attr_value.en = this.product.attributes[i].attr_values[selectedValueIndex].en;
+        this.product.newPieces.attributes[i].attr_value.ar = this.product.attributes[i].attr_values[selectedValueIndex].ar;
+        this.product.newPieces.attributes[i].attr_value.en = this.product.attributes[i].attr_values[selectedValueIndex].en;
         // console.log(selectedValueIndex,i)
       },
 
@@ -467,12 +475,12 @@
       async addSpec() {
         const newSpec2 = {
           title: {
-            ar: this.newSpec.title.ar,
-            en: this.newSpec.title.en
+            ar: this.product.newSpec.title.ar,
+            en: this.product.newSpec.title.en
           },
           details: {
-            ar: this.newSpec.details.ar,
-            en: this.newSpec.details.en
+            ar: this.product.newSpec.details.ar,
+            en: this.product.newSpec.details.en
           }
         };
         await this.product.specs.push(newSpec2);
@@ -488,16 +496,16 @@
        */
       removeNewSpecAndAssignToTable() {
         const newItemForTable = {
-          'الاسم بالعربى': this.newSpec.title.ar,
-          'الوصف بالعربى': this.newSpec.details.ar,
-          'الاسم بالانجليزية': this.newSpec.title.en,
-          'الوصف بالانجليزية': this.newSpec.details.en
+          'الاسم بالعربى': this.product.newSpec.title.ar,
+          'الوصف بالعربى': this.product.newSpec.details.ar,
+          'الاسم بالانجليزية': this.product.newSpec.title.en,
+          'الوصف بالانجليزية': this.product.newSpec.details.en
         };
-        this.tableOfSpecs.push(newItemForTable);
-        this.newSpec.title.ar = '';
-        this.newSpec.title.en = '';
-        this.newSpec.details.ar = '';
-        this.newSpec.details.en = '';
+        this.product.tableOfSpecs.push(newItemForTable);
+        this.product.newSpec.title.ar = '';
+        this.product.newSpec.title.en = '';
+        this.product.newSpec.details.ar = '';
+        this.product.newSpec.details.en = '';
       },
 
 
@@ -506,15 +514,15 @@
        * @return void
        */
       addAttr() {
-        const ar_title = this.newAttr.attr_name.ar;
-        const en_title = this.newAttr.attr_name.en;
+        const ar_title = this.product.newAttr.attr_name.ar;
+        const en_title = this.product.newAttr.attr_name.en;
 
-        const ar_values_array = this.newAttr.attr_values.ar.split(',');
+        const ar_values_array = this.product.newAttr.attr_values.ar.split(',');
         const ar_values_array_filtered = ar_values_array.filter((item) => {
           return item != ''
         });
 
-        const en_values_array = this.newAttr.attr_values.en.split(',');
+        const en_values_array = this.product.newAttr.attr_values.en.split(',');
         const en_values_array_filtered = en_values_array.filter((item) => {
           return item != ''
         });
@@ -535,7 +543,7 @@
           TableOfAttr.enAttr += '<span class="badge badge-success">' + item + '</span>'
         });
         TableOfAttr.enAttr += '</div>';
-        this.tableOfAttrs.push(TableOfAttr);
+        this.product.tableOfAttrs.push(TableOfAttr);
 
         //add to original product
         let oneAttr = {
@@ -569,11 +577,11 @@
 
           }
         };
-        this.newPieces.attributes.push(attribute);
-        this.newAttr.attr_name.ar = '';
-        this.newAttr.attr_name.en = '';
-        this.newAttr.attr_values.ar = '';
-        this.newAttr.attr_values.en = ''
+        this.product.newPieces.attributes.push(attribute);
+        this.product.newAttr.attr_name.ar = '';
+        this.product.newAttr.attr_name.en = '';
+        this.product.newAttr.attr_values.ar = '';
+        this.product.newAttr.attr_values.en = ''
 
       },
 
@@ -584,9 +592,9 @@
        * @param id
        */
       deleteAttr(id) {
-        this.$delete(this.tableOfAttrs, id);
+        this.$delete(this.product.tableOfAttrs, id);
         this.$delete(this.product.attributes, id);
-        this.$delete(this.newPieces.attributes, id)
+        this.$delete(this.product.newPieces.attributes, id)
       },
 
 
@@ -596,22 +604,22 @@
        */
       addPiece() {
         const newPiece = {
-          attributes: this.newPieces.attributes,
-          price: this.newPieces.price,
-          hasDiscount: this.newPieces.hasDiscount,
-          discountPrice: this.newPieces.discountPrice,
-          discountEnd: this.newPieces.discountEnd,
-          inStock: this.newPieces.inStock,
+          attributes: this.product.newPieces.attributes,
+          price: this.product.newPieces.price,
+          hasDiscount: this.product.newPieces.hasDiscount,
+          discountPrice: this.product.newPieces.discountPrice,
+          discountEnd: this.product.newPieces.discountEnd,
+          inStock: this.product.newPieces.inStock,
         };
         this.product.pieces.push(newPiece);
 
         let newTableOfPiecesItem = {
           attributes: '',
-          price: this.newPieces.price,
-          hasDiscount: this.newPieces.hasDiscount,
-          discountPrice: this.newPieces.discountPrice,
-          discountEnd: this.newPieces.discountEnd,
-          inStock: this.newPieces.inStock,
+          price: this.product.newPieces.price,
+          hasDiscount: this.product.newPieces.hasDiscount,
+          discountPrice: this.product.newPieces.discountPrice,
+          discountEnd: this.product.newPieces.discountEnd,
+          inStock: this.product.newPieces.inStock,
         };
 
         newTableOfPiecesItem.attributes += '<div>';
@@ -620,19 +628,26 @@
         });
         newTableOfPiecesItem.attributes += '</div>';
 
-        this.tableOfPieces.push(newTableOfPiecesItem);
+        this.product.tableOfPieces.push(newTableOfPiecesItem);
 
-        this.newPieces.price = null;
-        this.newPieces.hasDiscount = false;
-        this.newPieces.discountPrice = null;
-        this.newPieces.discountEnd = null;
-        this.newPieces.inStock = 0
+        this.product.newPieces.price = null;
+        this.product.newPieces.hasDiscount = false;
+        this.product.newPieces.discountPrice = null;
+        this.product.newPieces.discountEnd = null;
+        this.product.newPieces.inStock = 0
 
       },
 
 
-      deletePiece(i){
 
+      /**
+       * Deleting pieces
+       * @return void
+       * @param i Index of Piece
+       */
+      deletePiece(i){
+        this.$delete(this.product.tableOfPieces,i);
+        this.$delete(this.product.pieces,i);
       }
 
 
@@ -652,7 +667,8 @@
         }else {
           return 'لا يوجد تاريخ انتهاء'
         }
-      }
+      },
+
     }
 
   }
