@@ -427,10 +427,11 @@
                 </p>
 
                 <div class="row">
-                  <div class="m-3" style="height:300px;width:200px;"
-
-                       v-for="(src , index) in product.newPieces.images"
-                       :key="index"
+                  <div
+                    class="m-3"
+                    style="height:300px;width:200px;"
+                    v-for="(src , index) in product.newPieces.images"
+                    :key="index"
                   >
                     <img
                       :src="'/uploads/products/'+src"
@@ -455,8 +456,6 @@
                   "
                     >ازالة الملف</button>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -529,12 +528,13 @@
               يجب ان تكون الملفات المرفوعة بصيغة png, jpeg, jpg, pdf,
               doc, docx
             </p>
-           
+
             <div class="row">
-              <div class="m-3" style="height:300px;width:200px;"
-              
-                 v-for="(src ,index) in product.images"
-                 :key="index"
+              <div
+                class="m-3"
+                style="height:300px;width:200px;"
+                v-for="(src ,index) in product.images"
+                :key="index"
               >
                 <img
                   :src="'/uploads/products/'+src"
@@ -559,8 +559,6 @@
                   "
                 >ازالة الملف</button>
               </div>
-
-         
             </div>
           </div>
         </div>
@@ -637,9 +635,9 @@ export default {
           discountPrice: null,
           discountEnd: null,
           inStock: 0,
-          images:[]
+          images: []
         },
-        tableOfPieces: [],
+        tableOfPieces: []
       },
       categories: [],
       files: [],
@@ -648,7 +646,7 @@ export default {
       filesExtError: false,
       filesExtErrorPiece: false,
       filesUploadsPercent: 0,
-      filesUploadsPercentPiece: 0,
+      filesUploadsPercentPiece: 0
     };
   },
   mounted() {
@@ -692,13 +690,17 @@ export default {
      */
     createProduct(e) {
       e.preventDefault();
-      axios.post('/admin/product/create',{
-        product:this.product
-      }).then(res => {
-        if(res.data.message=='created'){
-          alert('تم انشاء المنتج بنجاح يمكنك انشاء منتج آخر')
-        }
-      })
+      if (confirm("هل انت متاكد من البيانات و ستقوم بإنشاء المنتج ؟")) {
+        axios
+          .post("/admin/product/create", {
+            product: this.product
+          })
+          .then(res => {
+            if (res.data.message == "created") {
+              alert("تم انشاء المنتج بنجاح يمكنك انشاء منتج آخر");
+            }
+          });
+      }
     },
 
     /**
@@ -830,15 +832,30 @@ export default {
      * @return void
      */
     addPiece() {
-      const newPiece = {
-        attributes: this.product.newPieces.attributes,
+      let newPiece = {
+        attributes: [],
         price: this.product.newPieces.price,
         hasDiscount: this.product.newPieces.hasDiscount,
         discountPrice: this.product.newPieces.discountPrice,
         discountEnd: this.product.newPieces.discountEnd,
         inStock: this.product.newPieces.inStock,
-        images:this.product.newPieces.images
+        images: this.product.newPieces.images
       };
+      this.product.newPieces.attributes.map((item,i)=>{
+        console.log(item)
+        let NAFNP = {
+          attr_name:{
+            ar:item.attr_name.ar,
+            en:item.attr_name.en,
+          },
+          attr_value:{
+            ar:item.attr_value.ar,
+            en:item.attr_value.en,
+          }
+        }
+        newPiece.attributes.push(NAFNP)
+      })
+      console.log(newPiece)
       this.product.pieces.push(newPiece);
 
       let newTableOfPiecesItem = {
@@ -922,11 +939,9 @@ export default {
             this.product.images.push(file);
           });
         })
-        .catch(err => {
-
-        });
+        .catch(err => {});
     },
-    filesChangeForPiece(e){
+    filesChangeForPiece(e) {
       this.form = new FormData();
       this.files = [];
       this.filesExtErrorPiece = false;
@@ -963,12 +978,9 @@ export default {
             this.product.newPieces.images.push(file);
           });
         })
-        .catch(err => {
-
-        });
-
+        .catch(err => {});
     },
-    removeImagePiece(i){
+    removeImagePiece(i) {
       this.$delete(this.product.newPieces.images, i);
     },
 
