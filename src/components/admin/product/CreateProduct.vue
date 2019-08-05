@@ -38,6 +38,28 @@
           </b-form-group>
         </b-col>
 
+        <!--en title-->
+        <b-col sm="12">
+          <b-form-group
+            label="اسم البراند باللغة العربية:"
+            label-for="product-title"
+            description="مثال سامسونج او أبل "
+          >
+            <b-form-input v-model="product.brand.ar" type="text"></b-form-input>
+          </b-form-group>
+        </b-col>
+
+        <!--en title-->
+        <b-col sm="12">
+          <b-form-group
+            label="اسم البراند باللغة الانجليزية:"
+            label-for="product-title"
+            description="Apple or Samsung "
+          >
+            <b-form-input v-model="product.brand.en" type="text"></b-form-input>
+          </b-form-group>
+        </b-col>
+
         <!-- price -->
         <b-col sm="12">
           <b-form-group
@@ -51,6 +73,26 @@
               v-model.number="product.price"
               type="number"
             ></b-form-input>
+          </b-form-group>
+        </b-col>
+
+        <b-col sm="12">
+          <b-form-group label="وضع هذا المنتج فى العروض:">
+            <b-form-checkbox
+              v-model="product.isOffer"
+              :value="true"
+              :unchecked-value="false"
+            >عند اختيارك هذا الاختيار سيظهر هذا المنتج فى صفحة العروض</b-form-checkbox>
+          </b-form-group>
+        </b-col>
+
+        <b-col sm="12">
+          <b-form-group
+            label="المخزون:"
+            label-for="product-price"
+            description="من فضلك وضع عدد القطع فى المخزن بحيث لا يتم طلب اوردرات غير موجودة "
+          >
+            <b-form-input v-model.number="product.inStock" type="number"></b-form-input>
           </b-form-group>
         </b-col>
 
@@ -637,7 +679,13 @@ export default {
           inStock: 0,
           images: []
         },
-        tableOfPieces: []
+        tableOfPieces: [],
+        inStock: 0,
+        brand: {
+          ar: "",
+          en: ""
+        },
+        isOffer: false
       },
       categories: [],
       files: [],
@@ -841,21 +889,21 @@ export default {
         inStock: this.product.newPieces.inStock,
         images: this.product.newPieces.images
       };
-      this.product.newPieces.attributes.map((item,i)=>{
-        console.log(item)
+      this.product.newPieces.attributes.map((item, i) => {
+        console.log(item);
         let NAFNP = {
-          attr_name:{
-            ar:item.attr_name.ar,
-            en:item.attr_name.en,
+          attr_name: {
+            ar: item.attr_name.ar,
+            en: item.attr_name.en
           },
-          attr_value:{
-            ar:item.attr_value.ar,
-            en:item.attr_value.en,
+          attr_value: {
+            ar: item.attr_value.ar,
+            en: item.attr_value.en
           }
-        }
-        newPiece.attributes.push(NAFNP)
-      })
-      console.log(newPiece)
+        };
+        newPiece.attributes.push(NAFNP);
+      });
+      console.log(newPiece);
       this.product.pieces.push(newPiece);
 
       let newTableOfPiecesItem = {
