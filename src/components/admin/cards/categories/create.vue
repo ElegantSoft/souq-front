@@ -14,28 +14,6 @@
       </div>
     </div>
 
-    <p v-if="!isChild">
-      نوع القسم:
-      <span style="color:#e678a1">قسم رئيسى</span>
-    </p>
-    <p v-if="isChild">
-      نوع القسم:
-      <span style="color:#e678a1">قسم فرعى</span>
-    </p>
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label for>هل تريد ان تجعل هذا القسم فرعى لقسم رئيسى آخر</label>
-        <input type="checkbox" v-model="isChild" />
-      </div>
-    </div>
-    <div class="col-sm-12">
-      <div class="form-group" v-if="isChild">
-        <label for>القسم الرئيسى</label>
-        <select class="form-control" v-model="newCategory.parentId">
-          <option v-for="(parent,i) in parents" :key="i" :value="parent._id">{{parent.name.ar+" "+parent.name.en}}</option>
-        </select>
-      </div>
-    </div>
     <div class="col-sm-6">
       <label for>صورة القسم</label>
       <span class="text-muted small">برجاء اختيار صورة مناسبة للقسم سوف تظهر فى التطبيق</span>
@@ -95,11 +73,8 @@ export default {
           ar: "",
           en: ""
         },
-        parentId: null,
         image: "placeholder.png"
       },
-      parents: [],
-      isChild: false,
       form: new FormData(),
       uploadPercentage: 0,
       extErr: false,
@@ -107,9 +82,6 @@ export default {
       errMessage: "",
       failedAdded: false
     };
-  },
-  mounted() {
-    this.getParent();
   },
   watch: {
     isChild(v) {
@@ -119,14 +91,6 @@ export default {
     }
   },
   methods: {
-    getParent() {
-      axios({
-        url: "/app/category/get-parents",
-        method: "GET"
-      }).then(res => {
-        this.parents = res.data.cats;
-      });
-    },
     imageHandler(e) {
       this.uploadPercentage = 0;
       this.extErr = false;
@@ -160,7 +124,7 @@ export default {
     addCategory() {
       this.successAdded = false;
       axios({
-        url: "/admin/category/create",
+        url: "/admin/card/category/create",
         method: "POST",
         data: {
           name: this.newCategory.name,

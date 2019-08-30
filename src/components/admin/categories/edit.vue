@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container row container" style="text-align:right">
+	<div class="form-container row container" style="text-align:right">
     <div class="col-sm-12">
       <div class="form-group">
         <label for>اسم القسم باللغة العربية</label>
@@ -29,9 +29,9 @@
       </div>
     </div>
     <div class="col-sm-12">
-      <div class="form-group" v-if="isChild">
+      <div class="" v-if="isChild">
         <label for>القسم الرئيسى</label>
-        <select class="form-control" v-model="newCategory.parentId">
+        <select class="" v-model="newCategory.parentId">
           <option v-for="(parent,i) in parents" :key="i" :value="parent._id">{{parent.name.ar+" "+parent.name.en}}</option>
         </select>
       </div>
@@ -70,15 +70,15 @@
     <div class="col-sm-12">
       <div class="form-group">
         <button
-          @click="addCategory"
+          @click="saveCategory"
           style="width:100%"
           type="button"
           class="mt-3 btn btn-md btn-info"
-        >اضافة القسم</button>
+        >تعديل</button>
       </div>
     </div>
     <div class="col-sm-12">
-      <p v-if="successAdded" class="alert alert-success p-2">تم اضافة القسم بنجاح</p>
+      <p v-if="successAdded" class="alert alert-success p-2">تم تعديل القسم بنجاح</p>
       <p v-if="failedAdded" class="alert alert-danger p-2">{{errMessage}}</p>
     </div>
   </div>
@@ -87,29 +87,25 @@
 <script>
 import axios from "axios";
 import { setTimeout } from "timers";
+
 export default {
-  data() {
-    return {
-      newCategory: {
-        name: {
-          ar: "",
-          en: ""
-        },
-        parentId: null,
-        image: "placeholder.png"
-      },
-      parents: [],
-      isChild: false,
+	props:['category'],
+	data() {
+		return {
+			newCategory:JSON.parse(this.category),
+			parents: [],
+      isChild: undefined,
       form: new FormData(),
       uploadPercentage: 0,
       extErr: false,
       successAdded: false,
       errMessage: "",
       failedAdded: false
-    };
-  },
-  mounted() {
-    this.getParent();
+		}
+	},
+	mounted() {
+		this.getParent();
+		this.isChild = this.newCategory.parentId ? true : false
   },
   watch: {
     isChild(v) {
@@ -157,12 +153,13 @@ export default {
         this.extErr = true;
       }
     },
-    addCategory() {
+    saveCategory() {
       this.successAdded = false;
       axios({
-        url: "/admin/category/create",
-        method: "POST",
+        url: "/admin/category/update",
+        method: "PUT",
         data: {
+					id: this.newCategory._id,
           name: this.newCategory.name,
           parentId: this.newCategory.parentId,
           image: this.newCategory.image
@@ -182,8 +179,10 @@ export default {
       this.successAdded = false;
       this.failedAdded = false;
     }
-  }
-};
+  },
+	
+
+}
 </script>
 
 <style scoped>

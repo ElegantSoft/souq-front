@@ -21,8 +21,6 @@
                 <th>#</th>
                 <th>الصورة</th>
                 <th>اسم القسم</th>
-                <th data-breakpoints="sm xs">القسم الرئيسية لهذا القسم</th>
-                <th data-breakpoints="xs">عدد المنتجات</th>
                 <th data-breakpoints="sm xs md">تعديل او حذف</th>
               </tr>
             </thead>
@@ -35,10 +33,6 @@
                 <td>
                   <h5>{{cat.name.ar+' '+cat.name.en}}</h5>
                 </td>
-                <td>
-                  <span class="text-muted">{{cat.parentId ? cat.parentId.name.ar : 'قسم رئيسى'}}</span>
-                </td>
-                <td>{{cat.productCount}}</td>
                 <td>
                   <a
                     :href="'/admin/category/edit/'+cat._id"
@@ -75,7 +69,7 @@
 </template>
 
 <script>
-import { bus } from "../../../main";
+import { bus } from "../../../../main";
 import axios from "axios";
 export default {
   data() {
@@ -90,7 +84,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/app/category/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/app/card/category/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -98,7 +92,7 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: "/admin/category/delete",
+        url: "/admin/card/category/delete",
         method: "DELETE",
         data: {
           id: cat._id

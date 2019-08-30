@@ -13,16 +13,18 @@
             </select>
           </div>
         </div>
-
-        <div class="body table-responsive">
+				<!-- product-table -->
+				<div class="body table-responsive">
           <table class="table table-hover m-b-0">
             <thead>
               <tr>
                 <th>#</th>
                 <th>الصورة</th>
-                <th>اسم القسم</th>
-                <th data-breakpoints="sm xs">القسم الرئيسية لهذا القسم</th>
-                <th data-breakpoints="xs">عدد المنتجات</th>
+                <th>العنوان</th>
+								<th>العروض</th>
+								<th>السعر</th>
+								<th>التخفيض</th>
+								<th>فى المخزون</th>
                 <th data-breakpoints="sm xs md">تعديل او حذف</th>
               </tr>
             </thead>
@@ -36,7 +38,7 @@
                   <h5>{{cat.name.ar+' '+cat.name.en}}</h5>
                 </td>
                 <td>
-                  <span class="text-muted">{{cat.parentId ? cat.parentId.name.ar : 'قسم رئيسى'}}</span>
+                  <span class="text-muted">{{cat.parentId ? cat.parentId.name : 'قسم رئيسى'}}</span>
                 </td>
                 <td>{{cat.productCount}}</td>
                 <td>
@@ -58,17 +60,7 @@
             </tbody>
           </table>
         </div>
-        <div class="card">
-          <div class="body">
-            <vue-pagination
-              :total-pages="lastPage"
-              :total="lastPage"
-              :max-visible-buttons="maxVisible"
-              :current-page="page"
-              :last="lastPage"
-            ></vue-pagination>
-          </div>
-        </div>
+				<!-- product-table -->
       </div>
     </div>
   </div>
@@ -77,71 +69,20 @@
 <script>
 import { bus } from "../../../main";
 import axios from "axios";
+
 export default {
   data() {
     return {
       page: 1,
       limit: 5,
-      categories: [],
+      products: [],
       nextPage: null,
       lastPage: 3
     };
   },
-  methods: {
-    async getCategories() {
-      const res = await axios({
-        url: `/app/category/paginate?page=${this.page}&limit=${this.limit}`
-      });
-      this.categories = res.data.data;
-      this.lastPage = res.data.lastPage;
-      this.nextPage = res.data.nextPage;
-    },
-    remove(cat, i) {
-      axios({
-        url: "/admin/category/delete",
-        method: "DELETE",
-        data: {
-          id: cat._id
-        }
-      }).then(res => {
-        if (res.data.message == "deleted") {
-          alert("تم مسح القسم");
-          this.$delete(this.categories, i);
-        }
-      });
-    }
-  },
-  computed: {
-    maxVisible() {
-      return this.lastPage < 5 ? this.lastPage - 1 : 5;
-    }
-  },
-  created() {
-    bus.$on("pagechanged", data => {
-      this.page = data;
-      return this.getCategories();
-    });
-  },
-  mounted() {
-    this.getCategories();
-  },
-  watch: {
-    limit(n) {
-      this.page = 1;
-      return this.getCategories();
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style>
-  .form-group  {
-    text-align: right;
-  }
-  .bootstrap-select .btn.btn-round.btn-simple .filter-option {
-    font-size: 14px;
-    float: right;
-    text-align: center;
-  }
 </style>
-

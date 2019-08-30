@@ -19,27 +19,23 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>الصورة</th>
-                <th>اسم القسم</th>
-                <th data-breakpoints="sm xs">القسم الرئيسية لهذا القسم</th>
-                <th data-breakpoints="xs">عدد المنتجات</th>
+                <th>القسم</th>
+                <th>العنوان</th>
+                <th>السعر</th>
                 <th data-breakpoints="sm xs md">تعديل او حذف</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(cat,i) in categories" :key="cat._id">
                 <td>{{i+1}}</td>
+                <td><img :src="'/uploads/cat-thumbs/resized/'+cat.category.image" width="48" alt="Product img" /></td>
                 <td>
-                  <img :src="'/uploads/cat-thumbs/resized/'+cat.image" width="48" alt="Product img" />
+                  <h5>{{cat.title.ar+' '+cat.title.en}}</h5>
                 </td>
+                <td>{{cat.price}}</td>
+                
                 <td>
-                  <h5>{{cat.name.ar+' '+cat.name.en}}</h5>
-                </td>
-                <td>
-                  <span class="text-muted">{{cat.parentId ? cat.parentId.name.ar : 'قسم رئيسى'}}</span>
-                </td>
-                <td>{{cat.productCount}}</td>
-                <td>
+                  
                   <a
                     :href="'/admin/category/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
@@ -75,7 +71,7 @@
 </template>
 
 <script>
-import { bus } from "../../../main";
+import { bus } from "../../../../main";
 import axios from "axios";
 export default {
   data() {
@@ -90,7 +86,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/app/category/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/app/card/card/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -98,14 +94,14 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: "/admin/category/delete",
+        url: "/admin/card/card/delete",
         method: "DELETE",
         data: {
           id: cat._id
         }
       }).then(res => {
         if (res.data.message == "deleted") {
-          alert("تم مسح القسم");
+          alert("تم مسح البطاقة");
           this.$delete(this.categories, i);
         }
       });
