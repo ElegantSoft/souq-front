@@ -194,7 +194,7 @@
               :clear-on-select="false"
               :preserve-search="true"
               placeholder="الاقسام"
-              label="name"
+              :custom-label="handleName"
               track-by="_id"
               :preselect-first="true"
               selectedLabel="تم"
@@ -721,6 +721,9 @@ export default {
       ].en;
       // console.log(selectedValueIndex,i)
     },
+    handleName(cat){
+      return cat.name.ar+" "+cat.name.en
+    },
 
     /**
      * Fetching categories
@@ -728,7 +731,7 @@ export default {
      */
     fetchCategories() {
       axios
-        .get("/app/category/get-parents")
+        .get("/app/category/get-children")
         .then(res => (this.categories = res.data.cats));
     },
 

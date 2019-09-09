@@ -35,6 +35,10 @@ Vue.component('index-card-card', require('./components/admin/cards/cards/index.v
 Vue.component('create-city', require('./components/admin/cities/create.vue').default);
 Vue.component('index-city', require('./components/admin/cities/index.vue').default);
 
+//payment
+Vue.component('index-payment', require('./components/admin/payments/index.vue').default);
+Vue.component('edit-payment', require('./components/admin/payments/edit.vue').default);
+
 new Vue({
   el: '#app'
 });  
