@@ -121,24 +121,15 @@ export default {
       su: {
         0: false,
         1: false,
-        2: false,
-        3: false,
-        4: false
       },
       form: new FormData(),
       uploadPercentage: {
         0: 0,
         1: 0,
-        2: 0,
-        3: 0,
-        4: 0
       },
       extErr: {
         0: false,
         1: false,
-        2: false,
-        3: false,
-        4: false
       },
       successAdded: false,
       errMessage: "",
@@ -153,7 +144,7 @@ export default {
   methods: {
     fetchSlider() {
       axios
-        .get("/admin/slider/fetch-slider")
+        .get("/admin/banner/fetch-slider")
         .then(res => (this.sliders = res.data.slider));
     },
     fetchCategories() {
@@ -182,7 +173,7 @@ export default {
     },
     async update(slider, i) {
       const res = await axios({
-        url: "/admin/slider/update",
+        url: "/admin/banner/update",
         method: "POST",
         data: {
           slider
@@ -202,16 +193,12 @@ export default {
       this.uploadPercentage = {
         0: 0,
         1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
+       
       };
       this.extErr = {
         0: false,
         1: false,
-        2: false,
-        3: false,
-        4: false
+        
       };
       this.form = new FormData();
 
@@ -229,7 +216,7 @@ export default {
           }.bind(this)
         };
         axios
-          .post("/admin/slider/upload-image", this.form, config)
+          .post("/admin/banner/upload-image", this.form, config)
           .then(res => {
             if (res.data.message == "success") {
               this.sliders[i].image = res.data.image;

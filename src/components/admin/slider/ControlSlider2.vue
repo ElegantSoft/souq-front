@@ -153,7 +153,7 @@ export default {
   methods: {
     fetchSlider() {
       axios
-        .get("/admin/slider/fetch-slider")
+        .get("/admin/slider/fetch-slider2")
         .then(res => (this.sliders = res.data.slider));
     },
     fetchCategories() {
