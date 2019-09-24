@@ -96,6 +96,15 @@ Vue.component(
   require("./components/admin/coupon/create.vue").default
 );
 
+//orders
+Vue.component(
+  "index-order",
+  require("./components/admin/orders/index.vue").default
+);
+Vue.component(
+  "show-order",
+  require("./components/admin/orders/show.vue").default
+);
 new Vue({
   el: "#app"
 });

@@ -4,7 +4,7 @@
       <div class="card product_item_list" style="padding:35px">
         <div class="col-sm-4">
           <div class="form-group">
-            <label style="text-align:right">عدد العناصر المعروضة</label>
+            <label style="text-align:right">عدد الطلبات</label>
             <select v-model.number="limit" class="form-control show-tick">
               <option value="5">5</option>
               <option value="20">20</option>
@@ -18,41 +18,32 @@
           <table class="table table-hover m-b-0">
             <thead>
               <tr>
-                <th>#</th>
-                <th>الصورة</th>
-                <th>اسم القسم</th>
-                <th data-breakpoints="sm xs">القسم الرئيسية لهذا القسم</th>
-                <th data-breakpoints="xs">عدد المنتجات</th>
-                <th data-breakpoints="sm xs md">تعديل او حذف</th>
+                <th>رقم الاوردر</th>
+                <th>الحالة</th>
+                <th>الوقت</th>
+                <th>السعر الاجمالى</th>
+                <th>عدد المنتجات</th>
+                <th>عرض</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(cat,i) in categories" :key="cat._id">
-                <td>{{i+1}}</td>
+              <tr v-for="(order,i) in categories" :key="i">
+                <td>{{order.id}}</td>
+                <td v-html="renderStatus(order.status)"></td>
                 <td>
-                  <img :src="'/uploads/cat-thumbs/resized/'+cat.image" width="48" alt="Product img" />
+                  <h5>{{order.created_at | formatDate}}</h5>
                 </td>
                 <td>
-                  <h5>{{cat.name.ar+' '+cat.name.en}}</h5>
+                  <h5>{{order.totalCost}}</h5>
                 </td>
-                <td>
-                  <span class="text-muted">{{cat.parentId ? cat.parentId.name.ar : 'قسم رئيسى'}}</span>
-                </td>
-                <td>{{cat.productCount}}</td>
+                <td>{{order.items.length}}</td>
                 <td>
                   <a
-                    :href="'/admin/category/edit/'+cat._id"
+                    :href="'/admin/order/show/'+order._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
-                    <i class="zmdi zmdi-edit"></i>
+                    <i class="zmdi zmdi-eye"></i>
                   </a>
-                  <button
-                    @click="remove(cat,i)"
-                    type="button"
-                    class="btn btn-default waves-effect waves-float waves-red"
-                  >
-                    <i class="zmdi zmdi-delete"></i>
-                  </button>
                 </td>
               </tr>
             </tbody>
@@ -75,7 +66,9 @@
 </template>
 
 <script>
+import orderStatus from "../../../../../../config/orderStatus";
 import { bus } from "../../../main";
+import moment from "moment";
 import axios from "axios";
 export default {
   data() {
@@ -87,14 +80,44 @@ export default {
       lastPage: 3
     };
   },
+  filters: {
+    formatDate(data) {
+      if (data) {
+        moment.locale("ar_SA");
+        return moment(String(data)).fromNow();
+      } else {
+        return "";
+      }
+    }
+  },
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/app/category/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/admin/order/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
       this.nextPage = res.data.nextPage;
+    },
+    renderStatus(status) {
+      switch (status) {
+        case orderStatus.review:
+          return "بانتظار المراجعة";
+        case orderStatus.processing:
+          return "قيد التجهيز";
+        case orderStatus.shipped:
+          return "فى الشحن";
+        case orderStatus.delivered:
+          return "تم التسليم";
+        case orderStatus.reviewForReturn:
+          return " بانتظار المراجعة للارجاع";
+        case orderStatus.returned:
+          return "مرتجع";
+        case orderStatus.notReturned:
+          return "تم رفض الارجاع";
+        default:
+          return "";
+      }
     },
     remove(cat, i) {
       axios({

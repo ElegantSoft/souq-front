@@ -261,6 +261,11 @@
       <!--show specs-->
       <div v-if="product.tableOfSpecs.length >= 1">
         <b-table striped hover small :items="product.tableOfSpecs"></b-table>
+        <button
+          type="button"
+          class="btn btn-block btn-danger"
+          @click="clearSpecs"
+        >اعادة تعيين المواصفات</button>
       </div>
 
       <!--attributes-->
@@ -701,6 +706,10 @@ export default {
     this.fetchCategories();
   },
   methods: {
+    clearSpecs() {
+      this.product.tableOfSpecs = [];
+      this.product.specs = [];
+    },
     /**
      * assign value to attribute when change value
      * @return void
@@ -721,8 +730,8 @@ export default {
       ].en;
       // console.log(selectedValueIndex,i)
     },
-    handleName(cat){
-      return cat.name.ar+" "+cat.name.en
+    handleName(cat) {
+      return cat.name.ar + " " + cat.name.en;
     },
 
     /**
