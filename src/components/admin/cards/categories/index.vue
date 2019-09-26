@@ -35,7 +35,7 @@
                 </td>
                 <td>
                   <a
-                    :href="'/admin/category/edit/'+cat._id"
+                    :href="'/admin/card/category/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -129,13 +129,13 @@ export default {
 </script>
 
 <style>
-  .form-group  {
-    text-align: right;
-  }
-  .bootstrap-select .btn.btn-round.btn-simple .filter-option {
-    font-size: 14px;
-    float: right;
-    text-align: center;
-  }
+.form-group {
+  text-align: right;
+}
+.bootstrap-select .btn.btn-round.btn-simple .filter-option {
+  font-size: 14px;
+  float: right;
+  text-align: center;
+}
 </style>
 

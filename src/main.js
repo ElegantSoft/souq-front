@@ -58,6 +58,10 @@ Vue.component(
   require("./components/admin/cards/categories/create.vue").default
 );
 Vue.component(
+  "edit-card-category",
+  require("./components/admin/cards/categories/edit.vue").default
+);
+Vue.component(
   "create-card-card",
   require("./components/admin/cards/cards/create.vue").default
 );
