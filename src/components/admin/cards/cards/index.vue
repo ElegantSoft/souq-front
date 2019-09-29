@@ -28,16 +28,17 @@
             <tbody>
               <tr v-for="(cat,i) in categories" :key="cat._id">
                 <td>{{i+1}}</td>
-                <td><img :src="'/uploads/cat-thumbs/resized/'+cat.category.image" width="48" alt="Product img" /></td>
+                <td>
+                  <img :src="'/uploads/cat-thumbs/resized/'+cat.image" width="48" alt="Product img" />
+                </td>
                 <td>
                   <h5>{{cat.title.ar+' '+cat.title.en}}</h5>
                 </td>
                 <td>{{cat.price}}</td>
-                
+
                 <td>
-                  
                   <a
-                    :href="'/admin/category/edit/'+cat._id"
+                    :href="'/admin/card/card/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -77,7 +78,7 @@ export default {
   data() {
     return {
       page: 1,
-      limit: 5,
+      limit: 20,
       categories: [],
       nextPage: null,
       lastPage: 3
@@ -131,13 +132,13 @@ export default {
 </script>
 
 <style>
-  .form-group  {
-    text-align: right;
-  }
-  .bootstrap-select .btn.btn-round.btn-simple .filter-option {
-    font-size: 14px;
-    float: right;
-    text-align: center;
-  }
+.form-group {
+  text-align: right;
+}
+.bootstrap-select .btn.btn-round.btn-simple .filter-option {
+  font-size: 14px;
+  float: right;
+  text-align: center;
+}
 </style>
 

@@ -52,7 +52,7 @@
           style="width:100%"
           type="button"
           class="mt-3 btn btn-md btn-info"
-        >اضافة القسم</button>
+        >تعديل القسم</button>
       </div>
     </div>
     <div class="col-sm-12">

@@ -56,16 +56,7 @@ export default {
       orderStatus: orderStatus
     };
   },
-  filters: {
-    formatDate(data) {
-      if (data) {
-        moment.locale("ar_SA");
-        return moment(String(data)).fromNow();
-      } else {
-        return "";
-      }
-    }
-  },
+  filters: {},
   methods: {
     async editOrder() {
       const res = await axios.put("/admin/order", {

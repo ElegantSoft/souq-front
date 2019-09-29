@@ -4,7 +4,7 @@
       <div class="card product_item_list" style="padding:35px">
         <div class="col-sm-4">
           <div class="form-group">
-            <label style="text-align:right">عدد الطلبات</label>
+            <label style="text-align:right">عدد العناصر المعروضة</label>
             <select v-model.number="limit" class="form-control show-tick">
               <option value="5">5</option>
               <option value="20">20</option>
@@ -13,42 +13,53 @@
             </select>
           </div>
         </div>
-
+        <!-- product-table -->
         <div class="body table-responsive">
           <table class="table table-hover m-b-0">
             <thead>
               <tr>
-                <th>رقم الاوردر</th>
-                <th>الحالة</th>
-                <th>الوقت</th>
-                <th>السعر الاجمالى</th>
-                <th>عدد المنتجات</th>
-                <th>عرض</th>
+                <th>#</th>
+                <th>الصورة</th>
+                <th>العنوان</th>
+                <th>المباع</th>
+                <th>السعر</th>
+                <th>التخفيض</th>
+                <th>فى المخزون</th>
+                <th data-breakpoints="sm xs md">تعديل</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(order,i) in categories" :key="i">
-                <td>{{order.id}}</td>
-                <td v-html="renderStatus(order.status)"></td>
+              <tr v-for="(product,i) in products" :key="product._id">
+                <td>{{i+1}}</td>
                 <td>
-                  <span>{{order.created_at | date}}</span>
+                  <img
+                    :src="'/uploads/products/resized/'+product.images[product.images.length - 1]"
+                    width="48"
+                    alt="Product img"
+                  />
                 </td>
                 <td>
-                  <span>{{order.totalCost}}</span>
+                  <span>{{product.title.ar | truncate(30, '...')}}</span>
                 </td>
-                <td>{{order.items.length}}</td>
+                <td>
+                  <span class="text-muted">{{product.sold}}</span>
+                </td>
+                <td>{{product.price}}</td>
+                <td>{{getDiscount(product)}}</td>
+                <td>{{inStock(product)}}</td>
                 <td>
                   <a
-                    :href="'/admin/order/show/'+order._id"
+                    :href="'/admin/product/edit/'+product._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
-                    <i class="zmdi zmdi-eye"></i>
+                    <i class="zmdi zmdi-edit"></i>
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <!-- product-table -->
         <div class="card">
           <div class="body">
             <vue-pagination
@@ -66,16 +77,15 @@
 </template>
 
 <script>
-import orderStatus from "../../../../../../config/orderStatus";
 import { bus } from "../../../main";
-import moment from "moment";
 import axios from "axios";
+
 export default {
   data() {
     return {
       page: 1,
       limit: 20,
-      categories: [],
+      products: [],
       nextPage: null,
       lastPage: 3
     };
@@ -83,45 +93,34 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/order/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/admin/product/paginate?page=${this.page}&limit=${this.limit}`
       });
-      this.categories = res.data.data;
+      this.products = res.data.data;
       this.lastPage = res.data.lastPage;
       this.nextPage = res.data.nextPage;
     },
-    renderStatus(status) {
-      switch (status) {
-        case orderStatus.review:
-          return "بانتظار المراجعة";
-        case orderStatus.processing:
-          return "قيد التجهيز";
-        case orderStatus.shipped:
-          return "فى الشحن";
-        case orderStatus.delivered:
-          return "تم التسليم";
-        case orderStatus.reviewForReturn:
-          return " بانتظار المراجعة للارجاع";
-        case orderStatus.returned:
-          return "مرتجع";
-        case orderStatus.notReturned:
-          return "تم رفض الارجاع";
-        default:
-          return "";
+    getDiscount(product) {
+      const discountDate = new Date(product.discountEnd);
+      if (product.hasDiscount) {
+        if (discountDate > Date.now()) {
+          return product.discountPrice;
+        } else {
+          return "تاريخ التخفيض انتهى";
+        }
+      } else {
+        return "لا يوجد ";
       }
     },
-    remove(cat, i) {
-      axios({
-        url: "/admin/category/delete",
-        method: "DELETE",
-        data: {
-          id: cat._id
-        }
-      }).then(res => {
-        if (res.data.message == "deleted") {
-          alert("تم مسح القسم");
-          this.$delete(this.categories, i);
-        }
-      });
+    inStock(product) {
+      if (product.pieces.length) {
+        let stock = 0;
+        product.pieces.map(piece => {
+          stock += piece.inStock;
+        });
+        return stock;
+      } else {
+        return product.inStock;
+      }
     }
   },
   computed: {
@@ -157,4 +156,3 @@ export default {
   text-align: center;
 }
 </style>
-

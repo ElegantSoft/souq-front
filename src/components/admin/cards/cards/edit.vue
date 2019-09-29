@@ -67,11 +67,11 @@
           style="width:100%"
           type="button"
           class="mt-3 btn btn-md btn-info"
-        >اضافة البطاقة</button>
+        >تعديل البطاقة</button>
       </div>
     </div>
     <div class="col-sm-12">
-      <p v-if="successAdded" class="alert alert-success p-2">تم اضافة البطاقة بنجاح</p>
+      <p v-if="successAdded" class="alert alert-success p-2">تم تعديل البطاقة بنجاح</p>
       <p v-if="failedAdded" class="alert alert-danger p-2">{{errMessage}}</p>
     </div>
   </div>
@@ -81,21 +81,17 @@
 import axios from "axios";
 import { setTimeout } from "timers";
 export default {
+  props: ["card"],
   data() {
     return {
-      newCategory: {
-        title: {
-          ar: "",
-          en: ""
-        },
-        image: "placeholder.png",
-        price: 0,
-        category: null
-      },
+      newCategory: JSON.parse(this.card),
       successAdded: false,
       errMessage: "",
       failedAdded: false,
       categories: [],
+      successAdded: false,
+      errMessage: "",
+      failedAdded: false,
       form: new FormData(),
       uploadPercentage: 0,
       extErr: false,
@@ -146,13 +142,10 @@ export default {
     addCategory() {
       this.successAdded = false;
       axios({
-        url: "/admin/card/card/create",
-        method: "POST",
+        url: "/admin/card/card/edit/" + this.newCategory._id,
+        method: "PUT",
         data: {
-          title: this.newCategory.title,
-          price: this.newCategory.price,
-          category: this.newCategory.category,
-          image: this.newCategory.image
+          card: this.newCategory
         }
       }).then(res => {
         if (res.data.message == "success") {
