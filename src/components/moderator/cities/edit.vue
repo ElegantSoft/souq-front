@@ -1,20 +1,17 @@
 <template>
   <div style="text-align:right">
     <vue-form-generator :schema="schema" :model="model"></vue-form-generator>
-    <button type="button" class="btn btn-block btn-success" @click="create">اضافة مديمة</button>
+    <button type="button" class="btn btn-block btn-success" @click="create">تعديل المدينة</button>
   </div>
 </template>
 
 <script>
 import Axios from "axios";
 export default {
+  props: ["city"],
   data() {
     return {
-      model: {
-        nameAr: "",
-        nameEn: "",
-        shipPrice: ""
-      },
+      model: JSON.parse(this.city),
       schema: {
         groups: [
           {
@@ -46,13 +43,13 @@ export default {
   },
   methods: {
     create() {
-      Axios.post("/admin/city/", {
+      Axios.put("/admin/city/edit/" + this.model._id, {
         nameAr: this.model.nameAr,
         nameEn: this.model.nameEn,
         shipPrice: this.model.shipPrice
       }).then(res => {
-        if (res.status == 201) {
-          alert("تم الاضافة بنجاح");
+        if (res.status == 200) {
+          alert("تم تعديل بنجاح");
         }
       });
     }

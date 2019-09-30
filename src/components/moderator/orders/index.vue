@@ -4,7 +4,7 @@
       <div class="card product_item_list" style="padding:35px">
         <div class="col-sm-4">
           <div class="form-group">
-            <label style="text-align:right">عدد العناصر المعروضة</label>
+            <label style="text-align:right">عدد الطلبات</label>
             <select v-model.number="limit" class="form-control show-tick">
               <option value="5">5</option>
               <option value="20">20</option>
@@ -18,30 +18,31 @@
           <table class="table table-hover m-b-0">
             <thead>
               <tr>
-                <th>#</th>
-                <th>الاسم</th>
-                <th>سعر الشحن</th>
-
-                <th data-breakpoints="sm xs md">تعديل</th>
+                <th>رقم الاوردر</th>
+                <th>الحالة</th>
+                <th>الوقت</th>
+                <th>السعر الاجمالى</th>
+                <th>عدد المنتجات</th>
+                <th>عرض</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(cat,i) in categories" :key="cat._id">
-                <td>{{i+1}}</td>
-
+              <tr v-for="(order,i) in categories" :key="i">
+                <td>{{order.id}}</td>
+                <td v-html="renderStatus(order.status)"></td>
                 <td>
-                  <h5>{{cat.nameAr+' '+cat.nameEn}}</h5>
+                  <span>{{order.created_at | date}}</span>
                 </td>
                 <td>
-                  <h5>{{cat.shipPrice}}</h5>
+                  <span>{{order.totalCost}}</span>
                 </td>
-
+                <td>{{order.items.length}}</td>
                 <td>
                   <a
-                    :href="'/admin/city/edit/'+cat._id"
-                    class="btn btn-default waves-effect waves-float waves-red"
+                    :href="'/admin/order/show/'+order._id"
+                    class="btn btn-default waves-effect waves-float waves-green"
                   >
-                    <i class="zmdi zmdi-edit"></i>
+                    <i class="zmdi zmdi-eye"></i>
                   </a>
                 </td>
               </tr>
@@ -65,7 +66,9 @@
 </template>
 
 <script>
+import orderStatus from "../../../../../../config/orderStatus";
 import { bus } from "../../../main";
+import moment from "moment";
 import axios from "axios";
 export default {
   data() {
@@ -80,19 +83,42 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/city/index?page=${this.page}&limit=${this.limit}`
+        url: `/admin/order/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
       this.nextPage = res.data.nextPage;
     },
+    renderStatus(status) {
+      switch (status) {
+        case orderStatus.review:
+          return "بانتظار المراجعة";
+        case orderStatus.processing:
+          return "قيد التجهيز";
+        case orderStatus.shipped:
+          return "فى الشحن";
+        case orderStatus.delivered:
+          return "تم التسليم";
+        case orderStatus.reviewForReturn:
+          return " بانتظار المراجعة للارجاع";
+        case orderStatus.returned:
+          return "مرتجع";
+        case orderStatus.notReturned:
+          return "تم رفض الارجاع";
+        default:
+          return "";
+      }
+    },
     remove(cat, i) {
       axios({
-        url: `/admin/city/${cat._id}`,
-        method: "DELETE"
+        url: "/admin/category/delete",
+        method: "DELETE",
+        data: {
+          id: cat._id
+        }
       }).then(res => {
-        if (res.status == 204) {
-          alert("تم مسح المديمة");
+        if (res.data.message == "deleted") {
+          alert("تم مسح القسم");
           this.$delete(this.categories, i);
         }
       });

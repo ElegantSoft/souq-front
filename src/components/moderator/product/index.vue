@@ -13,33 +13,44 @@
             </select>
           </div>
         </div>
-
+        <!-- product-table -->
         <div class="body table-responsive">
           <table class="table table-hover m-b-0">
             <thead>
               <tr>
                 <th>#</th>
-                <th>الاسم</th>
-                <th>سعر الشحن</th>
-
+                <th>الصورة</th>
+                <th>العنوان</th>
+                <th>المباع</th>
+                <th>السعر</th>
+                <th>التخفيض</th>
+                <th>فى المخزون</th>
                 <th data-breakpoints="sm xs md">تعديل</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(cat,i) in categories" :key="cat._id">
+              <tr v-for="(product,i) in products" :key="product._id">
                 <td>{{i+1}}</td>
-
                 <td>
-                  <h5>{{cat.nameAr+' '+cat.nameEn}}</h5>
+                  <img
+                    :src="'/uploads/products/resized/'+product.images[product.images.length - 1]"
+                    width="48"
+                    alt="Product img"
+                  />
                 </td>
                 <td>
-                  <h5>{{cat.shipPrice}}</h5>
+                  <span>{{product.title.ar | truncate(30, '...')}}</span>
                 </td>
-
+                <td>
+                  <span class="text-muted">{{product.sold}}</span>
+                </td>
+                <td>{{product.price}}</td>
+                <td>{{getDiscount(product)}}</td>
+                <td>{{inStock(product)}}</td>
                 <td>
                   <a
-                    :href="'/admin/city/edit/'+cat._id"
-                    class="btn btn-default waves-effect waves-float waves-red"
+                    :href="'/admin/product/edit/'+product._id"
+                    class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
                   </a>
@@ -48,6 +59,7 @@
             </tbody>
           </table>
         </div>
+        <!-- product-table -->
         <div class="card">
           <div class="body">
             <vue-pagination
@@ -67,12 +79,13 @@
 <script>
 import { bus } from "../../../main";
 import axios from "axios";
+
 export default {
   data() {
     return {
       page: 1,
       limit: 20,
-      categories: [],
+      products: [],
       nextPage: null,
       lastPage: 3
     };
@@ -80,22 +93,34 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/city/index?page=${this.page}&limit=${this.limit}`
+        url: `/admin/product/paginate?page=${this.page}&limit=${this.limit}`
       });
-      this.categories = res.data.data;
+      this.products = res.data.data;
       this.lastPage = res.data.lastPage;
       this.nextPage = res.data.nextPage;
     },
-    remove(cat, i) {
-      axios({
-        url: `/admin/city/${cat._id}`,
-        method: "DELETE"
-      }).then(res => {
-        if (res.status == 204) {
-          alert("تم مسح المديمة");
-          this.$delete(this.categories, i);
+    getDiscount(product) {
+      const discountDate = new Date(product.discountEnd);
+      if (product.hasDiscount) {
+        if (discountDate > Date.now()) {
+          return product.discountPrice;
+        } else {
+          return "تاريخ التخفيض انتهى";
         }
-      });
+      } else {
+        return "لا يوجد ";
+      }
+    },
+    inStock(product) {
+      if (product.pieces.length) {
+        let stock = 0;
+        product.pieces.map(piece => {
+          stock += piece.inStock;
+        });
+        return stock;
+      } else {
+        return product.inStock;
+      }
     }
   },
   computed: {
@@ -131,4 +156,3 @@ export default {
   text-align: center;
 }
 </style>
-

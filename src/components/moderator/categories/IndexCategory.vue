@@ -19,30 +19,40 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>الاسم</th>
-                <th>سعر الشحن</th>
-
-                <th data-breakpoints="sm xs md">تعديل</th>
+                <th>الصورة</th>
+                <th>اسم القسم</th>
+                <th data-breakpoints="sm xs">القسم الرئيسية لهذا القسم</th>
+                <th data-breakpoints="xs">عدد المنتجات</th>
+                <th data-breakpoints="sm xs md">تعديل او حذف</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(cat,i) in categories" :key="cat._id">
                 <td>{{i+1}}</td>
-
                 <td>
-                  <h5>{{cat.nameAr+' '+cat.nameEn}}</h5>
+                  <img :src="'/uploads/cat-thumbs/resized/'+cat.image" width="48" alt="Product img" />
                 </td>
                 <td>
-                  <h5>{{cat.shipPrice}}</h5>
+                  <h5>{{cat.name.ar+' '+cat.name.en}}</h5>
                 </td>
-
+                <td>
+                  <span class="text-muted">{{cat.parentId ? cat.parentId.name.ar : 'قسم رئيسى'}}</span>
+                </td>
+                <td>{{cat.productCount}}</td>
                 <td>
                   <a
-                    :href="'/admin/city/edit/'+cat._id"
-                    class="btn btn-default waves-effect waves-float waves-red"
+                    :href="'/admin/category/edit/'+cat._id"
+                    class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
                   </a>
+                  <button
+                    @click="remove(cat,i)"
+                    type="button"
+                    class="btn btn-default waves-effect waves-float waves-red"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -80,7 +90,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/city/index?page=${this.page}&limit=${this.limit}`
+        url: `/app/category/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -88,11 +98,14 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: `/admin/city/${cat._id}`,
-        method: "DELETE"
+        url: "/admin/category/delete",
+        method: "DELETE",
+        data: {
+          id: cat._id
+        }
       }).then(res => {
-        if (res.status == 204) {
-          alert("تم مسح المديمة");
+        if (res.data.message == "deleted") {
+          alert("تم مسح القسم");
           this.$delete(this.categories, i);
         }
       });
