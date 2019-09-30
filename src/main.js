@@ -17,23 +17,23 @@ Vue.config.productionTip = false;
 Vue.component("multiselect", require("vue-multiselect").default);
 
 /**
- * moderator
+ * admin
  */
 Vue.component(
   "add-category",
-  require("./components/moderator/categories/AddCategory.vue").default
+  require("./components/admin/categories/AddCategory.vue").default
 );
 Vue.component(
   "edit-category",
-  require("./components/moderator/categories/edit.vue").default
+  require("./components/admin/categories/edit.vue").default
 );
 Vue.component(
   "control-slider",
-  require("./components/moderator/slider/ControlSlider.vue").default
+  require("./components/admin/slider/ControlSlider.vue").default
 );
 Vue.component(
   "control-sliderii",
-  require("./components/moderator/slider/ControlSlider2.vue").default
+  require("./components/admin/slider/ControlSlider2.vue").default
 );
 Vue.component(
   "control-banner",
@@ -41,21 +41,21 @@ Vue.component(
 );
 Vue.component(
   "index-category",
-  require("./components/moderator/categories/IndexCategory.vue").default
+  require("./components/admin/categories/IndexCategory.vue").default
 );
 
 //product
 Vue.component(
   "create-product",
-  require("./components/moderator/product/create.vue").default
+  require("./components/admin/product/create.vue").default
 );
 Vue.component(
   "index-product",
-  require("./components/moderator/product/index.vue").default
+  require("./components/admin/product/index.vue").default
 );
 Vue.component(
   "edit-product",
-  require("./components/moderator/product/edit.vue").default
+  require("./components/admin/product/edit.vue").default
 );
 
 Vue.component(
@@ -66,75 +66,79 @@ Vue.component(
 //cards
 Vue.component(
   "create-card-category",
-  require("./components/moderator/cards/categories/create.vue").default
+  require("./components/admin/cards/categories/create.vue").default
 );
 Vue.component(
   "edit-card-category",
-  require("./components/moderator/cards/categories/edit.vue").default
+  require("./components/admin/cards/categories/edit.vue").default
 );
 Vue.component(
   "create-card-card",
-  require("./components/moderator/cards/cards/create.vue").default
+  require("./components/admin/cards/cards/create.vue").default
 );
 Vue.component(
   "index-card-category",
-  require("./components/moderator/cards/categories/index.vue").default
+  require("./components/admin/cards/categories/index.vue").default
 );
 Vue.component(
   "index-card-card",
-  require("./components/moderator/cards/cards/index.vue").default
+  require("./components/admin/cards/cards/index.vue").default
 );
 Vue.component(
   "edit-card-card",
-  require("./components/moderator/cards/cards/edit.vue").default
+  require("./components/admin/cards/cards/edit.vue").default
 );
 
 //cites
 Vue.component(
   "create-city",
-  require("./components/moderator/cities/create.vue").default
+  require("./components/admin/cities/create.vue").default
 );
 Vue.component(
   "index-city",
-  require("./components/moderator/cities/index.vue").default
+  require("./components/admin/cities/index.vue").default
 );
 Vue.component(
   "edit-city",
-  require("./components/moderator/cities/edit.vue").default
+  require("./components/admin/cities/edit.vue").default
 );
 
 //payment
 Vue.component(
   "index-payment",
-  require("./components/moderator/payments/index.vue").default
+  require("./components/admin/payments/index.vue").default
 );
 Vue.component(
   "edit-payment",
-  require("./components/moderator/payments/edit.vue").default
+  require("./components/admin/payments/edit.vue").default
 );
 
 //coupons
 Vue.component(
   "create-coupon",
-  require("./components/moderator/coupon/create.vue").default
+  require("./components/admin/coupon/create.vue").default
 );
 Vue.component(
   "index-coupon",
-  require("./components/moderator/coupon/index.vue").default
+  require("./components/admin/coupon/index.vue").default
 );
 Vue.component(
   "edit-coupon",
-  require("./components/moderator/coupon/edit.vue").default
+  require("./components/admin/coupon/edit.vue").default
 );
 
 //orders
 Vue.component(
   "index-order",
-  require("./components/moderator/orders/index.vue").default
+  require("./components/admin/orders/index.vue").default
 );
 Vue.component(
   "show-order",
-  require("./components/moderator/orders/show.vue").default
+  require("./components/admin/orders/show.vue").default
+);
+Vue.component(
+  "index-delayed",
+  require("./components/admin/delayed/index.vue").default
 );
 
 /**
@@ -212,7 +216,7 @@ Vue.component(
   require("./components/moderator/cities/create.vue").default
 );
 Vue.component(
-  "index-city",
+  "m-index-city",
   require("./components/moderator/cities/index.vue").default
 );
 Vue.component(
