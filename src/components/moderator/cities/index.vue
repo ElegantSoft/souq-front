@@ -38,7 +38,7 @@
 
                 <td>
                   <a
-                    :href="'/admin/city/edit/'+cat._id"
+                    :href="'/moderator/city/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-red"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -80,7 +80,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/city/index?page=${this.page}&limit=${this.limit}`
+        url: `/moderator/city/index?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -88,7 +88,7 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: `/admin/city/${cat._id}`,
+        url: `/moderator/city/${cat._id}`,
         method: "DELETE"
       }).then(res => {
         if (res.status == 204) {

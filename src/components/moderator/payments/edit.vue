@@ -48,14 +48,14 @@ export default {
 		}
 	},
 	mounted(){
-		Axios.get("/admin/city/index?page=1&limit=99999999").then(res=>{
+		Axios.get("/moderator/city/index?page=1&limit=99999999").then(res=>{
 			 this.cities = res.data.data;
 		})
 	},
 	methods:{
 		save(){
 			Axios({
-				url:`/admin/payment/${this.newPayment._id}`,
+				url:`/moderator/payment/${this.newPayment._id}`,
 				method:'PUT',
 				data:{
 					cities:this.newPayment.cities

@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     create() {
-      Axios.post("/admin/city/", {
+      Axios.post("/moderator/city/", {
         nameAr: this.model.nameAr,
         nameEn: this.model.nameEn,
         shipPrice: this.model.shipPrice

@@ -38,7 +38,7 @@
 
                 <td>
                   <a
-                    :href="'/admin/card/card/edit/'+cat._id"
+                    :href="'/moderator/card/card/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -95,7 +95,7 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: "/admin/card/card/delete",
+        url: "/moderator/card/card/delete",
         method: "DELETE",
         data: {
           id: cat._id

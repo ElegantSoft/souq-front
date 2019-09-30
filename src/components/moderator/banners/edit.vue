@@ -144,7 +144,7 @@ export default {
   methods: {
     fetchSlider() {
       axios
-        .get("/admin/banner/fetch-slider")
+        .get("/moderator/banner/fetch-slider")
         .then(res => (this.sliders = res.data.slider));
     },
     fetchCategories() {
@@ -154,7 +154,7 @@ export default {
     },
     fetchProducts() {
       axios
-        .get("/admin/product/fetch-all")
+        .get("/moderator/product/fetch-all")
         .then(res => (this.products = res.data.products));
     },
     handleNameCat(cat) {
@@ -173,7 +173,7 @@ export default {
     },
     async update(slider, i) {
       const res = await axios({
-        url: "/admin/banner/update",
+        url: "/moderator/banner/update",
         method: "POST",
         data: {
           slider
@@ -216,7 +216,7 @@ export default {
           }.bind(this)
         };
         axios
-          .post("/admin/banner/upload-image", this.form, config)
+          .post("/moderator/banner/upload-image", this.form, config)
           .then(res => {
             if (res.data.message == "success") {
               this.sliders[i].image = res.data.image;

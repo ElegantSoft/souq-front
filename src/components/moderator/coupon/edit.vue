@@ -107,7 +107,7 @@ export default {
       );
     },
     getProducts() {
-      Axios.get("/admin/product/all-names").then(
+      Axios.get("/moderator/product/all-names").then(
         res => (this.products = res.data.products)
       );
     },
@@ -118,7 +118,7 @@ export default {
       return cat.title.ar + " " + cat.title.en;
     },
     create() {
-      Axios.put("/admin/coupon/" + this.newCoupon._id, {
+      Axios.put("/moderator/coupon/" + this.newCoupon._id, {
         model: this.newCoupon
       }).then(res => {
         if (res.status == 201) {

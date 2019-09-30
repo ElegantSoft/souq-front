@@ -41,7 +41,7 @@
                 <td>{{cat.productCount}}</td>
                 <td>
                   <a
-                    :href="'/admin/category/edit/'+cat._id"
+                    :href="'/moderator/category/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -98,7 +98,7 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: "/admin/category/delete",
+        url: "/moderator/category/delete",
         method: "DELETE",
         data: {
           id: cat._id

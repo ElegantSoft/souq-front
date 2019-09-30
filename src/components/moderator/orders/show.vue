@@ -59,7 +59,7 @@ export default {
   filters: {},
   methods: {
     async editOrder() {
-      const res = await axios.put("/admin/order", {
+      const res = await axios.put("/moderator/order", {
         id: this.order._id,
         status: this.order.status
       });

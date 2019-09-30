@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     create() {
-      Axios.put("/admin/city/edit/" + this.model._id, {
+      Axios.put("/moderator/city/edit/" + this.model._id, {
         nameAr: this.model.nameAr,
         nameEn: this.model.nameEn,
         shipPrice: this.model.shipPrice

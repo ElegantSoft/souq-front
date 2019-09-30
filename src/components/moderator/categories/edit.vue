@@ -142,7 +142,7 @@ export default {
           }.bind(this)
         };
         axios
-          .post("/admin/category/upload-image", this.form, config)
+          .post("/moderator/category/upload-image", this.form, config)
           .then(res => {
             if (res.data.message == "done") {
               this.newCategory.image = res.data.image;
@@ -156,7 +156,7 @@ export default {
     saveCategory() {
       this.successAdded = false;
       axios({
-        url: "/admin/category/update",
+        url: "/moderator/category/update",
         method: "PUT",
         data: {
 					id: this.newCategory._id,

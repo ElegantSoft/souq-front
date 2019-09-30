@@ -49,7 +49,7 @@
                 <td>{{inStock(product)}}</td>
                 <td>
                   <a
-                    :href="'/admin/product/edit/'+product._id"
+                    :href="'/moderator/product/edit/'+product._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -93,7 +93,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/product/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/moderator/product/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.products = res.data.data;
       this.lastPage = res.data.lastPage;

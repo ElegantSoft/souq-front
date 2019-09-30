@@ -38,7 +38,7 @@
 
                 <td>
                   <a
-                    :href="'/admin/coupon/edit/'+cat._id"
+                    :href="'/moderator/coupon/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -86,7 +86,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/coupon/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/moderator/coupon/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -94,7 +94,7 @@ export default {
     },
     deleteCoupon(id, i) {
       axios({
-        url: `/admin/coupon/${id}`,
+        url: `/moderator/coupon/${id}`,
         method: "DELETE"
       }).then(res => {
         if (res.status == 204) {

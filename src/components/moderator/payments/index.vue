@@ -29,7 +29,7 @@
                 </td>
 								<td>
                   <a
-                    :href="'/admin/payment/edit/'+cat._id"
+                    :href="'/moderator/payment/edit/'+cat._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-edit"></i>
@@ -63,7 +63,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/payment/index`
+        url: `/moderator/payment/index`
       });
       this.categories = res.data;
     },

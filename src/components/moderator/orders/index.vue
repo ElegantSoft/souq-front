@@ -39,7 +39,7 @@
                 <td>{{order.items.length}}</td>
                 <td>
                   <a
-                    :href="'/admin/order/show/'+order._id"
+                    :href="'/moderator/order/show/'+order._id"
                     class="btn btn-default waves-effect waves-float waves-green"
                   >
                     <i class="zmdi zmdi-eye"></i>
@@ -83,7 +83,7 @@ export default {
   methods: {
     async getCategories() {
       const res = await axios({
-        url: `/admin/order/paginate?page=${this.page}&limit=${this.limit}`
+        url: `/moderator/order/paginate?page=${this.page}&limit=${this.limit}`
       });
       this.categories = res.data.data;
       this.lastPage = res.data.lastPage;
@@ -111,7 +111,7 @@ export default {
     },
     remove(cat, i) {
       axios({
-        url: "/admin/category/delete",
+        url: "/moderator/category/delete",
         method: "DELETE",
         data: {
           id: cat._id

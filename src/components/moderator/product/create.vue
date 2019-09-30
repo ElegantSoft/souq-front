@@ -752,7 +752,7 @@ export default {
       e.preventDefault();
       if (confirm("هل انت متاكد من البيانات و ستقوم بإنشاء المنتج ؟")) {
         axios
-          .post("/admin/product/create", {
+          .post("/moderator/product/create", {
             product: this.product
           })
           .then(res => {
@@ -992,7 +992,7 @@ export default {
         }.bind(this)
       };
       axios
-        .post("/admin/product/upload-images", this.form, config)
+        .post("/moderator/product/upload-images", this.form, config)
         .then(res => {
           this.filesUploadsPercent = 0;
           res.data.images.map(file => {
@@ -1031,7 +1031,7 @@ export default {
         }.bind(this)
       };
       axios
-        .post("/admin/product/upload-images", this.form, config)
+        .post("/moderator/product/upload-images", this.form, config)
         .then(res => {
           this.filesUploadsPercentPiece = 0;
           res.data.images.map(file => {
