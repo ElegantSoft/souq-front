@@ -141,10 +141,19 @@ Vue.component(
   require("./components/admin/delayed/index.vue").default
 );
 
+//manage moderators
+Vue.component(
+  "create-moderator",
+  require("./components/admin/moderators/create.vue").default
+);
+
 /**
  * Moderator
  */
-
+Vue.component(
+  "m-index-delayed",
+  require("./components/moderator/delayed/index.vue").default
+);
 Vue.component(
   "m-add-category",
   require("./components/moderator/categories/AddCategory.vue").default

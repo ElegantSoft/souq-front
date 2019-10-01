@@ -246,8 +246,6 @@ export default {
 </script>
 
 <style scoped>
-.form-container {
-}
 .slider {
   border: 1px solid #e1e1e1;
   padding: 30px;
